@@ -104,7 +104,7 @@ export default {
   },
   methods: {
     home() {
-      this.$router.push({ name: 'gine' });
+      this.$router.push({ name: 'home' });
     },
     about() {
       this.$router.push({ name: 'about' });
