@@ -104,7 +104,7 @@ export default {
   },
   methods: {
     about() {
-      this.$router.push('about');
+      this.$router.push({ name: 'about' });
     }
   }
 }
