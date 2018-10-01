@@ -5,7 +5,7 @@
         <v-btn class="right" icon @click.stop="showDrawer = false">
           <v-icon>chevron_left</v-icon>
         </v-btn>
-        <v-list-tile @click="about()">
+        <v-list-tile @click="home()">
           <v-list-tile-action>
             <v-icon>home</v-icon>
           </v-list-tile-action>
@@ -52,7 +52,7 @@
       <v-spacer></v-spacer>
       <v-badge>
         <span slot="badge" v-if="showBadge">0</span>
-        <v-icon large @click="">
+        <v-icon large @click="about()">
           mail
         </v-icon>
       </v-badge>
@@ -103,6 +103,9 @@ export default {
     }
   },
   methods: {
+    home() {
+      this.$router.push({ name: 'gine' });
+    },
     about() {
       this.$router.push({ name: 'about' });
     }
