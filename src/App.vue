@@ -5,7 +5,7 @@
         <v-btn class="right" icon @click.stop="showDrawer = false">
           <v-icon>chevron_left</v-icon>
         </v-btn>
-        <v-list-tile>
+        <v-list-tile @click="about()">
           <v-list-tile-action>
             <v-icon>home</v-icon>
           </v-list-tile-action>
@@ -100,6 +100,11 @@ export default {
         ['Update', 'update'],
         ['Delete', 'delete']
       ]
+    }
+  },
+  methods: {
+    about() {
+      this.$router.push('about');
     }
   }
 }
