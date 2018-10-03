@@ -11,11 +11,11 @@
           </v-list-tile-action>
           <v-list-tile-title>Home</v-list-tile-title>
         </v-list-tile>
-        <v-list-group prepend-icon="account_circle" value="true">
+        <v-list-group prepend-icon="account_circle">
           <v-list-tile slot="activator">
             <v-list-tile-title>Users</v-list-tile-title>
           </v-list-tile>
-          <v-list-group no-action sub-group value="true">
+          <v-list-group no-action sub-group>
             <v-list-tile slot="activator">
               <v-list-tile-title>Admin</v-list-tile-title>
             </v-list-tile>
@@ -38,9 +38,9 @@
             </v-list-tile>
           </v-list-group>
         </v-list-group>
-        <v-list-tile @click="">
+        <v-list-tile @click="login()">
           <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
+            <v-icon>power_settings_new</v-icon>
           </v-list-tile-action>
           <v-list-tile-title>Logout</v-list-tile-title>
         </v-list-tile>
@@ -48,12 +48,11 @@
     </v-navigation-drawer>
     <v-toolbar color="blue-grey" dark fixed app>
       <v-toolbar-side-icon @click.stop="showDrawer = !showDrawer"></v-toolbar-side-icon>
-      <v-toolbar-title>PH/GH</v-toolbar-title>
+      <v-toolbar-title>Give Help + Get Help</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-badge>
-        <span slot="badge" v-if="showBadge">0</span>
-        <v-icon large @click="about()">
-          mail
+      <v-badge v-if="showAlert">
+        <v-icon @click="" color="yellow">
+          error
         </v-icon>
       </v-badge>
     </v-toolbar>
@@ -89,7 +88,7 @@ export default {
       showDrawer: false,
       activeBtn: 1,
       showNav: true,
-      showBadge: false,
+      showAlert: false,
       admins: [
         ['Management', 'people_outline'],
         ['Settings', 'settings']
@@ -103,16 +102,21 @@ export default {
     }
   },
   methods: {
-    home() {
-      this.$router.push({ name: 'home' });
+    home () {
+      this.$router.push({ name: 'home' })
     },
-    about() {
-      this.$router.push({ name: 'about' });
+    login () {
+      this.$router.push({ name: 'login' })
     }
+  },
+  created () {
+    this.showAlert = false
+    setTimeout(() => {
+      this.showAlert = true
+    }, 5000)
   }
 }
 </script>
-
 
 <style>
 </style>
