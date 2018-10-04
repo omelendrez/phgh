@@ -43,10 +43,6 @@ export default {
         return
       }
       this.activeSubmit = true
-      const payload = {
-        email: this.email
-      }
-      console.log(payload)
       this.$router.push({ name: 'login' })
     },
     back() {
