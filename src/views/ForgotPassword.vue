@@ -1,14 +1,12 @@
 <template>
-  <v-container class="login">
+  <v-container class="forgot-password">
     <span class="headline">
-      Login to your account
+      Reset your password
     </span>
     <v-form v-model="valid" ref="form">
       <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-      <v-text-field v-model="password" type="password" :counter="8" :rules="passwordRules" label="Password" required></v-text-field>
-      <v-btn block color="primary" :disabled="activeSubmit" @click="submit">LOGIN</v-btn>
-      <v-checkbox label="Keep me signed" v-model="keepSigned"></v-checkbox>
-      <v-btn flat small class="right forgot" color="red" @click="reset">Forgot password?</v-btn>
+      <v-btn block color="primary" :disabled="activeSubmit" @click="submit">RESET PASSWORD</v-btn>
+      <v-btn small class="back" color="warning" @click="back">Back to Login</v-btn>
     </v-form>
     <Snack v-bind:message="alertMessage"/>
   </v-container>
@@ -18,24 +16,18 @@
 import Snack from './../components/Snack';
 
 export default {
-  name: 'Login',
+  name: 'ForgotPassword',
   components: {
     Snack
   },
   data: () => ({
     valid: false,
     activeSubmit: false,
-    keepSigned: false,
     alertMessage: '',
     email: '',
     emailRules: [
       v => !!v || 'E-mail is required',
       v => /.+@.+/.test(v) || 'E-mail must be valid'
-    ],
-    password: '',
-    passwordRules: [
-      v => !!v || 'Password is required',
-      v => v.length >= 8 || 'Password must be at list 8 characters'
     ]
   }),
   methods: {
@@ -51,9 +43,10 @@ export default {
         return
       }
       this.activeSubmit = true
+      this.$router.push({ name: 'login' })
     },
-    reset () {
-      this.$router.push({ name: 'ForgotPassword' })
+    back() {
+      this.$router.push({ name: 'login' })
     }
   }
 }
@@ -61,13 +54,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.login {
-  box-sizing: border-box;
-  max-width: 500px;
+.forgot-password {
   margin: 5% auto;
+  max-width: 500px;
 }
-.forgot {
-  margin-top: 30px;
-  text-transform: capitalize;
+.back {
+  margin-top: 60px;
 }
 </style>
