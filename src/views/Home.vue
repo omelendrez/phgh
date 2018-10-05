@@ -6,7 +6,7 @@
 
 <script>
 // @ is an alias to /src
-import store from '@/store'
+import store from '@/store/index'
 
 export default {
   name: 'home',

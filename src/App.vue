@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="container">
     <v-navigation-drawer v-if="isAuthenticated" v-model="showDrawer" class="blue-grey lighten-5" stateles value="true" fixed clipped>
       <v-list>
         <v-btn class="right" icon @click.stop="showDrawer = false">
@@ -46,7 +46,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar color="blue-grey" dark fixed app>
+    <v-toolbar color="blue-grey" dark>
       <v-toolbar-side-icon @click.stop="showDrawer = !showDrawer" v-if="isAuthenticated"></v-toolbar-side-icon>
       <v-toolbar-title>Give Help + Get Help</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import store from './store'
+import store from './store/index'
 
 export default {
   name: 'app',

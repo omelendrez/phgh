@@ -16,7 +16,7 @@
 
 <script>
 import Snack from '@/components/Snack';
-import store from '@/store'
+import store from '@/store/index'
 
 export default {
   name: 'Login',
