@@ -10,15 +10,17 @@
       <v-checkbox label="Keep me signed" v-model="keepSigned"></v-checkbox>
       <v-btn flat small class="right forgot" color="red" @click="reset">Forgot password?</v-btn>
     </v-form>
-    <Snack v-bind:message="alertMessage"/>
+    <Snack v-bind:message="alertMessage" />
   </v-container>
 </template>
 
 <script>
-import Snack from './../components/Snack';
+import Snack from '@/components/Snack';
+import store from '@/store'
 
 export default {
   name: 'Login',
+  store,
   components: {
     Snack
   },
@@ -40,7 +42,7 @@ export default {
   }),
   methods: {
     submit () {
-      if(!this.valid) {
+      if (!this.valid) {
         const errors = []
         this.$refs.form.inputs.map(input => {
           input.errorBucket.map(error => {
@@ -51,6 +53,8 @@ export default {
         return
       }
       this.activeSubmit = true
+      store.dispatch('setAuthentication', true)
+      this.$router.push({ name: 'home' })
     },
     reset () {
       this.$router.push({ name: 'ForgotPassword' })
