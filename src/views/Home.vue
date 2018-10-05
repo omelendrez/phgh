@@ -6,8 +6,15 @@
 
 <script>
 // @ is an alias to /src
+import store from '@/store'
 
 export default {
-  name: 'home'
+  name: 'home',
+  store,
+  created () {
+    if (!store.getters.isAuthenticated) {
+      this.$router.push({ name: 'login' })
+    }
+  }
 }
 </script>

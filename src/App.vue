@@ -38,7 +38,7 @@
             </v-list-tile>
           </v-list-group>
         </v-list-group>
-        <v-list-tile @click="login()">
+        <v-list-tile @click="logout()">
           <v-list-tile-action>
             <v-icon>power_settings_new</v-icon>
           </v-list-tile-action>
@@ -46,7 +46,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar color="blue-grey" dark fixed app>
+    <v-toolbar v-if="isAuthenticated" color="blue-grey" dark fixed app>
       <v-toolbar-side-icon @click.stop="showDrawer = !showDrawer"></v-toolbar-side-icon>
       <v-toolbar-title>Give Help + Get Help</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -81,8 +81,11 @@
 </template>
 
 <script>
+import store from './store'
+
 export default {
   name: 'app',
+  store,
   data () {
     return {
       showDrawer: false,
@@ -101,19 +104,25 @@ export default {
       ]
     }
   },
+  computed: {
+    isAuthenticated () {
+      return store.getters.isAuthenticated
+    }
+  },
   methods: {
     home () {
       this.$router.push({ name: 'home' })
     },
-    login () {
+    logout () {
+      this.showDrawer = false
+      store.commit('authenticate', false)
       this.$router.push({ name: 'login' })
     }
   },
   created () {
-    this.showAlert = false
-    setTimeout(() => {
-      this.showAlert = true
-    }, 5000)
+    if (!store.getters.isAuthenticated) {
+      this.$router.push({ name: 'login' })
+    }
   }
 }
 </script>
