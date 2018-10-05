@@ -10,9 +10,9 @@ const routerOptions = [
     component: 'Landing'
   },
   {
-    path: '/login',
-    name: 'login',
-    component: 'Login'
+    path: '/signin',
+    name: 'signin',
+    component: 'Signin'
   },
   {
     path: '/forgot-password',

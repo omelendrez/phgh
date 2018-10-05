@@ -6,7 +6,7 @@
     <v-form v-model="valid" ref="form">
       <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
       <v-btn block color="primary" :disabled="activeSubmit" @click="submit">RESET PASSWORD</v-btn>
-      <v-btn small class="back" color="warning" @click="back">Back to Login</v-btn>
+      <v-btn small class="back" color="warning" @click="back">Back to Signin</v-btn>
     </v-form>
     <Snack v-bind:message="alertMessage"/>
   </v-container>
@@ -43,10 +43,10 @@ export default {
         return
       }
       this.activeSubmit = true
-      this.$router.push({ name: 'login' })
+      this.$router.push({ name: 'signin' })
     },
     back() {
-      this.$router.push({ name: 'login' })
+      this.$router.push({ name: 'signin' })
     }
   }
 }

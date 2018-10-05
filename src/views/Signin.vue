@@ -1,12 +1,9 @@
 <template>
-  <v-container class="login">
-    <span class="headline">
-      Login to your account
-    </span>
+  <v-container class="signin">
     <v-form v-model="valid" ref="form">
       <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
       <v-text-field v-model="password" type="password" :counter="8" :rules="passwordRules" label="Password" required></v-text-field>
-      <v-btn block color="primary" :disabled="activeSubmit" @click="submit">LOGIN</v-btn>
+      <v-btn block color="primary" :disabled="activeSubmit" @click="submit">Sign In</v-btn>
       <v-checkbox label="Keep me signed" v-model="keepSigned"></v-checkbox>
       <v-btn flat small class="right forgot" color="red" @click="reset">Forgot password?</v-btn>
     </v-form>
@@ -19,7 +16,7 @@ import Snack from '@/components/Snack';
 import store from '@/store/index'
 
 export default {
-  name: 'Login',
+  name: 'Signin',
   store,
   components: {
     Snack
@@ -59,13 +56,16 @@ export default {
     reset () {
       this.$router.push({ name: 'ForgotPassword' })
     }
+  },
+  created() {
+    store.dispatch('setAppTitle', 'Sign In')
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.login {
+.signin {
   box-sizing: border-box;
   max-width: 500px;
   margin: 5% auto;

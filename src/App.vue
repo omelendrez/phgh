@@ -48,7 +48,7 @@
     </v-navigation-drawer>
     <v-toolbar color="blue-grey" dark>
       <v-toolbar-side-icon @click.stop="showDrawer = !showDrawer" v-if="isAuthenticated"></v-toolbar-side-icon>
-      <v-toolbar-title>Give Help + Get Help</v-toolbar-title>
+      <v-toolbar-title>{{appTitle}}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-badge v-if="showAlert && isAuthenticated">
         <v-icon @click="showAlerts" color="yellow">
@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import store from './store/index'
+import store from '@/store/index'
 
 export default {
   name: 'app',
@@ -104,9 +104,19 @@ export default {
       ]
     }
   },
+  watch: {
+    isAuthenticated() {
+      if(!this.isAuthenticated) {
+        this.$router.push({name: 'signin'})
+      }
+    }
+  },
   computed: {
     isAuthenticated () {
       return store.getters.isAuthenticated
+    },
+    appTitle() {
+      return store.getters.getAppTitle
     }
   },
   methods: {
@@ -116,18 +126,12 @@ export default {
     logout () {
       this.showDrawer = false
       store.dispatch('setAuthentication', false)
-      this.$router.push({ name: 'login' })
     },
     doThis (e) {
       console.log('called', e)
     },
     showAlerts() {
       console.log('this show go show the list of alerts')
-    }
-  },
-  created () {
-    if (!store.getters.isAuthenticated) {
-      this.$router.push({ name: 'login' })
     }
   }
 }
