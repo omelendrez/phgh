@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="showDrawer" class="blue-grey lighten-5" stateles value="true" fixed clipped>
+    <v-navigation-drawer v-if="isAuthenticated" v-model="showDrawer" class="blue-grey lighten-5" stateles value="true" fixed clipped>
       <v-list>
         <v-btn class="right" icon @click.stop="showDrawer = false">
           <v-icon>chevron_left</v-icon>
@@ -46,11 +46,11 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar v-if="isAuthenticated" color="blue-grey" dark fixed app>
-      <v-toolbar-side-icon @click.stop="showDrawer = !showDrawer"></v-toolbar-side-icon>
+    <v-toolbar color="blue-grey" dark fixed app>
+      <v-toolbar-side-icon @click.stop="showDrawer = !showDrawer" v-if="isAuthenticated"></v-toolbar-side-icon>
       <v-toolbar-title>Give Help + Get Help</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-badge v-if="showAlert">
+      <v-badge v-if="showAlert && isAuthenticated">
         <v-icon @click="" color="yellow">
           error
         </v-icon>
@@ -61,7 +61,7 @@
         <router-view></router-view>
       </v-container>
     </v-content>
-    <v-footer app>
+    <v-footer app v-if="isAuthenticated">
       <v-bottom-nav :active.sync="activeBtn" :value="showNav" absolute color="transparent">
         <v-btn flat color="blue-grey">
           <span>Recents</span>
