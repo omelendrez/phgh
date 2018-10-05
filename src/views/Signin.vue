@@ -1,25 +1,31 @@
 <template>
-  <v-container class="login">
-    <span class="headline">
-      Login to your account
-    </span>
-    <v-form v-model="valid">
+  <v-container class="signin">
+    <v-form v-model="valid" ref="form">
       <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
       <v-text-field v-model="password" type="password" :counter="8" :rules="passwordRules" label="Password" required></v-text-field>
-      <v-btn block color="primary" :disabled="!valid || !activeSubmit" @click="submit">LOGIN</v-btn>
+      <v-btn block color="primary" :disabled="activeSubmit" @click="submit">Sign In</v-btn>
       <v-checkbox label="Keep me signed" v-model="keepSigned"></v-checkbox>
       <v-btn flat small class="right forgot" color="red" @click="reset">Forgot password?</v-btn>
     </v-form>
+    <Snack v-bind:message="alertMessage" />
   </v-container>
 </template>
 
 <script>
+import Snack from '@/components/Snack';
+import store from '@/store/index'
+
 export default {
-  name: 'Login',
+  name: 'Signin',
+  store,
+  components: {
+    Snack
+  },
   data: () => ({
     valid: false,
-    activeSubmit: true,
+    activeSubmit: false,
     keepSigned: false,
+    alertMessage: '',
     email: '',
     emailRules: [
       v => !!v || 'E-mail is required',
@@ -33,25 +39,36 @@ export default {
   }),
   methods: {
     submit () {
-      // this.activeSubmit = false
-      const payload = {
-        email: this.email,
-        password: this.password,
-        keepSigned: this.keepSigned
+      if (!this.valid) {
+        const errors = []
+        this.$refs.form.inputs.map(input => {
+          input.errorBucket.map(error => {
+            errors.push(error)
+          })
+        })
+        this.alertMessage = errors[0]
+        return
       }
-      console.log(payload)
+      this.activeSubmit = true
+      store.dispatch('setAuthentication', true)
+      this.$router.push({ name: 'home' })
     },
     reset () {
-      this.$router.push({ name: 'reset-password' })
+      this.$router.push({ name: 'ForgotPassword' })
     }
+  },
+  created() {
+    store.dispatch('setAppTitle', 'Sign In')
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.login {
-  max-width: 600px;
+.signin {
+  box-sizing: border-box;
+  max-width: 500px;
+  margin: 5% auto;
 }
 .forgot {
   margin-top: 30px;
