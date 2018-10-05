@@ -53,7 +53,7 @@ export default {
         return
       }
       this.activeSubmit = true
-      store.commit('authenticate', true)
+      store.dispatch('setAuthentication', true)
       this.$router.push({ name: 'home' })
     },
     reset () {

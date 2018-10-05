@@ -19,7 +19,7 @@
             <v-list-tile slot="activator">
               <v-list-tile-title>Admin</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile v-for="(admin, i) in admins" :key="i" @click="">
+            <v-list-tile v-for="(admin, i) in admins" :key="i" @click="admin[2]">
               <v-list-tile-title v-text="admin[0]"></v-list-tile-title>
               <v-list-tile-action>
                 <v-icon v-text="admin[1]"></v-icon>
@@ -30,7 +30,7 @@
             <v-list-tile slot="activator">
               <v-list-tile-title>Actions</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile v-for="(crud, i) in cruds" :key="i" @click="">
+            <v-list-tile v-for="(crud, i) in cruds" :key="i" @click="crud[2]">
               <v-list-tile-title v-text="crud[0]"></v-list-tile-title>
               <v-list-tile-action>
                 <v-icon v-text="crud[1]"></v-icon>
@@ -51,7 +51,7 @@
       <v-toolbar-title>Give Help + Get Help</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-badge v-if="showAlert && isAuthenticated">
-        <v-icon @click="" color="yellow">
+        <v-icon @click="showAlerts" color="yellow">
           error
         </v-icon>
       </v-badge>
@@ -93,14 +93,14 @@ export default {
       showNav: true,
       showAlert: false,
       admins: [
-        ['Management', 'people_outline'],
-        ['Settings', 'settings']
+        ['Management', 'people_outline', this.doThis],
+        ['Settings', 'settings', this.doThis]
       ],
       cruds: [
-        ['Create', 'add'],
-        ['Read', 'insert_drive_file'],
-        ['Update', 'update'],
-        ['Delete', 'delete']
+        ['Create', 'add', this.doThis],
+        ['Read', 'insert_drive_file', this.doThis],
+        ['Update', 'update', this.doThis],
+        ['Delete', 'delete', this.doThis]
       ]
     }
   },
@@ -115,8 +115,14 @@ export default {
     },
     logout () {
       this.showDrawer = false
-      store.commit('authenticate', false)
+      store.dispatch('setAuthentication', false)
       this.$router.push({ name: 'login' })
+    },
+    doThis (e) {
+      console.log('called', e)
+    },
+    showAlerts() {
+      console.log('this show go show the list of alerts')
     }
   },
   created () {
