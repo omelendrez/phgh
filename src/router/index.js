@@ -4,10 +4,26 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 const routerOptions = [
-  { path: '/', name: 'landing', component: 'Landing' },
-  { path: '/login', name: 'login', component: 'Login' },
-  { path: '/forgot-password', name: 'forgotPassword', component: 'ForgotPassword' },
-  { path: '/home', name: 'home', component: 'Home' }
+  {
+    path: '/',
+    name: 'landing',
+    component: 'Landing'
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: 'Login'
+  },
+  {
+    path: '/forgot-password',
+    name: 'forgotPassword',
+    component: 'ForgotPassword'
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: 'Home'
+  }
 ]
 
 const routes = routerOptions.map(route => {
