@@ -49,15 +49,17 @@ export default {
         this.alertMessage = errors[0]
         return
       }
-      this.activeSubmit = true
-      store.dispatch('setAuthentication', true)
-      this.$router.push({ name: 'home' })
+      let email = this.email
+      let password = this.password
+      store.dispatch('login', { email, password })
+        .then(() => this.$router.push({ name: 'home' }))
+        .catch(err => console.log(err))
     },
     reset () {
       this.$router.push({ name: 'ForgotPassword' })
     }
   },
-  created() {
+  created () {
     store.dispatch('setAppTitle', 'Sign In')
   }
 }
@@ -66,7 +68,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .signin {
-  box-sizing: border-box;
   max-width: 500px;
   margin: 5% auto;
 }

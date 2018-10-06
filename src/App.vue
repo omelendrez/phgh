@@ -1,5 +1,5 @@
 <template>
-  <v-app class="container">
+  <v-app>
     <v-navigation-drawer v-if="isAuthenticated" v-model="showDrawer" class="blue-grey lighten-5" stateles value="true" fixed clipped>
       <v-list>
         <v-btn class="right" icon @click.stop="showDrawer = false">
@@ -55,6 +55,7 @@
           error
         </v-icon>
       </v-badge>
+      <span>{{userName}}</span>
     </v-toolbar>
     <v-content>
       <v-container fluid>
@@ -105,18 +106,21 @@ export default {
     }
   },
   watch: {
-    isAuthenticated() {
-      if(!this.isAuthenticated) {
-        this.$router.push({name: 'signin'})
+    isAuthenticated () {
+      if (!this.isAuthenticated) {
+        this.$router.push({ name: 'landing' })
       }
     }
   },
   computed: {
+    userName () {
+      return store.getters.user.first
+    },
     isAuthenticated () {
       return store.getters.isAuthenticated
     },
-    appTitle() {
-      return store.getters.getAppTitle
+    appTitle () {
+      return store.getters.appTitle
     }
   },
   methods: {
@@ -125,12 +129,12 @@ export default {
     },
     logout () {
       this.showDrawer = false
-      store.dispatch('setAuthentication', false)
+      store.dispatch('logout')
     },
     doThis (e) {
       console.log('called', e)
     },
-    showAlerts() {
+    showAlerts () {
       console.log('this show go show the list of alerts')
     }
   }
