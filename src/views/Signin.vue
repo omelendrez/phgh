@@ -52,7 +52,7 @@ export default {
       // this.activeSubmit = true
       let email = this.email
       let password = this.password
-      this.$store.dispatch('login', { email, password })
+      store.dispatch('login', { email, password })
         .then(() => this.$router.push({ name: 'home' }))
         .catch(err => console.log(err))
     },
@@ -69,7 +69,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .signin {
-  box-sizing: border-box;
   max-width: 500px;
   margin: 5% auto;
 }

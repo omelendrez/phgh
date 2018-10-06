@@ -27,10 +27,10 @@ const actions = {
     })
   },
   logout ({ commit }) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       commit('logout')
       localStorage.removeItem('token')
-      delete this.$http.defaults.headers.common['Authorization']
+      delete axios.defaults.headers.common['Authorization']
       resolve()
     })
   }

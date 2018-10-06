@@ -16,7 +16,7 @@ const routerOptions = [
   },
   {
     path: '/forgot-password',
-    name: 'forgotPassword',
+    name: 'ForgotPassword',
     component: 'ForgotPassword'
   },
   {

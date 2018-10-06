@@ -20,6 +20,8 @@ const mutations = {
   logout (state) {
     state.status = ''
     state.token = ''
+    state.user = {}
+    state.authenticated = false
   },
 }
 
