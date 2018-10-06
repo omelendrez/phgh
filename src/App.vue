@@ -107,7 +107,7 @@ export default {
   watch: {
     isAuthenticated() {
       if(!this.isAuthenticated) {
-        this.$router.push({name: 'signin'})
+        this.$router.push({name: 'landing'})
       }
     }
   },

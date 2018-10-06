@@ -1,5 +1,8 @@
-const state ={
+const state = {
   appTitle: 'PHGH',
-  authenticated: false
+  authenticated: false,
+  token: localStorage.getItem('token') || '',
+  user: {},
+  status: ''
 }
 export default state

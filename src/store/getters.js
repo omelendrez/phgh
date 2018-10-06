@@ -1,10 +1,7 @@
 const getters = {
-  isAuthenticated(state) {
-    return state.authenticated
-  },
-  getAppTitle(state) {
-    return state.appTitle
-  }
+  isAuthenticated: state => state.authenticated,
+  authStatus: state => state.status,
+  getAppTitle: state => state.appTitle
 }
 
 export default getters
