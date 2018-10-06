@@ -3,6 +3,7 @@ const state = {
   authenticated: false,
   token: localStorage.getItem('token') || '',
   user: {},
-  status: ''
+  status: '',
+  roles: []
 }
 export default state

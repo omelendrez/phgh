@@ -1,8 +1,5 @@
 const mutations = {
-  authenticate (state, payload) {
-    state.authenticated = payload
-  },
-  storeAppTItle (state, payload) {
+  setAppTitle (state, payload) {
     state.appTitle = payload
   },
   auth_request (state) {

@@ -49,7 +49,6 @@ export default {
         this.alertMessage = errors[0]
         return
       }
-      // this.activeSubmit = true
       let email = this.email
       let password = this.password
       store.dispatch('login', { email, password })
