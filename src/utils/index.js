@@ -1,5 +1,5 @@
 const constants = {
-  API: 'http://localhost:3000/v1/'
+  API: 'https://phgh-be.herokuapp.com/v1'
 }
 
 export default constants
