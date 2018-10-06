@@ -2,14 +2,22 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
+import axios from 'axios'
 import Vuetify from 'vuetify'
-import firebase from 'firebase'
+// import firebase from 'firebase'
 import './registerServiceWorker'
 
 Vue.use(Vuetify)
 
 Vue.config.productionTip = false
+Vue.prototype.$http = axios
 
+const token = localStorage.getItem('token')
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}
+
+/*
 firebase.initializeApp({
   apiKey: "AIzaSyBUnhsAQR0501sD_qllcxjv0jvz8w9kBIU",
   authDomain: "phgh-c22c4.firebaseapp.com",
@@ -18,6 +26,8 @@ firebase.initializeApp({
   storageBucket: "phgh-c22c4.appspot.com",
   messagingSenderId: "95453109205"
 })
+
+*/
 
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'

@@ -18,7 +18,7 @@ export default {
   name: 'Home',
   store,
   created() {
-    store.dispatch('setAppTitle', 'Home')
+    store.dispatch('setAppTitle', '')
   }
 }
 
