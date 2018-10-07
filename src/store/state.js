@@ -4,6 +4,7 @@ const state = {
   token: localStorage.getItem('token') || '',
   user: {},
   status: '',
-  roles: []
+  apiError: null,
+  roles: null
 }
 export default state

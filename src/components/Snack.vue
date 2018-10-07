@@ -1,7 +1,7 @@
 <template>
-  <v-snackbar v-model="showSnack" :timeout= "timeout" :top="top" >
+  <v-snackbar v-model="showSnack" :timeout="timeout" value="multi-line" top="true">
     {{ message }}
-    <v-btn color="orange" flat @click="showSnack = false" >
+    <v-btn dark flat color="orange" @click="showSnack = false">
       Close
     </v-btn>
   </v-snackbar>
@@ -11,14 +11,12 @@
 export default {
   name: 'Snack',
   data: () => ({
-    timeout: 6000,
     showSnack: false,
-    top: true
+    timeout: 0
   }),
   watch: {
-    message() {
-      if(this.message.length> 0) {
-        this.showSnack = false
+    message () {
+      if (this.message.length > 0) {
         this.showSnack = true
       }
     }

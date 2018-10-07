@@ -1,9 +1,12 @@
 <template>
   <v-container class="signin">
     <v-form v-model="valid" ref="form">
-      <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-      <v-text-field v-model="password" type="password" :counter="8" :rules="passwordRules" label="Password" required></v-text-field>
+      <v-text-field v-model="email" label="E-mail" required></v-text-field>
+      <v-text-field v-model="password" type="password" label="Password" required></v-text-field>
       <v-btn block color="primary" :disabled="activeSubmit" @click="submit">Sign In</v-btn>
+      <v-alert v-model="apiErrorAlert" type="error">
+        {{apiErrorMessage}}
+      </v-alert>
       <v-checkbox label="Keep me signed" v-model="keepSigned"></v-checkbox>
       <v-btn flat small class="right forgot" color="red" @click="reset">Forgot password?</v-btn>
     </v-form>
@@ -25,18 +28,26 @@ export default {
     valid: false,
     activeSubmit: false,
     keepSigned: false,
+    apiErrorAlert: false,
+    apiErrorMessage: '',
     alertMessage: '',
     email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+/.test(v) || 'E-mail must be valid'
-    ],
-    password: '',
-    passwordRules: [
-      v => !!v || 'Password is required',
-      v => v.length >= 8 || 'Password must be at list 8 characters'
-    ]
+    password: ''
   }),
+  watch: {
+    apiError () {
+      if (this.apiError) {
+        //this.apiErrorAlert = this.apiError
+        //this.apiErrorMessage = this.apiError ? this.apiError.data.error : ''
+        this.alertMessage = this.apiError ? this.apiError.data.error : ''
+      }
+    }
+  },
+  computed: {
+    apiError () {
+      return store.getters.apiError
+    }
+  },
   methods: {
     submit () {
       if (!this.valid) {
