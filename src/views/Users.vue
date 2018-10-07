@@ -176,7 +176,9 @@ export default {
       confirm('Are you sure you want to delete this user?') && this.items.splice(index, 1)
     },
     save () {
-      store.dispatch('addUser', { user: this.editedItem, isNew: this.editedIndex === -1 }) && this.editedIndex === -1
+      if (this.editedIndex === -1) {
+        store.dispatch('addUser', { user: this.editedItem, isNew: this.editedIndex === -1 })
+      }
       this.close()
     }
   },
