@@ -5,6 +5,7 @@ const state = {
   user: {},
   status: '',
   apiError: null,
-  roles: null
+  roles: [],
+  users: []
 }
 export default state
