@@ -3,7 +3,8 @@ const getters = {
   authStatus: state => state.status,
   appTitle: state => state.appTitle,
   user: state => state.user,
-  apiError: state => state.apiError
+  apiError: state => state.apiError,
+  users: state => state.users
 }
 
 export default getters

@@ -94,7 +94,7 @@ export default {
       showNav: true,
       showAlert: false,
       admins: [
-        ['Management', 'people_outline', this.doThis],
+        ['Management', 'people_outline', this.goUsers],
         ['Settings', 'settings', this.doThis]
       ],
       cruds: [
@@ -114,7 +114,8 @@ export default {
   },
   computed: {
     userName () {
-      return store.getters.user.first
+      const sg = store.getters.user
+      return sg.first + ' ' + sg.last
     },
     isAuthenticated () {
       return store.getters.isAuthenticated
@@ -136,6 +137,10 @@ export default {
     },
     showAlerts () {
       console.log('this show go show the list of alerts')
+    },
+    goUsers() {
+      this.showDrawer = false
+      this.$router.push({ name: 'users' })
     }
   }
 }
