@@ -18,13 +18,13 @@ const mutations = {
   logout (state) {
     state.status = ''
     state.token = ''
-    state.user = {}
+    state.user = { first: '', last: '' }
     state.authenticated = false
   },
   users_request (state) {
     state.status = 'loading'
   },
-  users_success (state, users ) {
+  users_success (state, users) {
     state.status = 'success'
     state.users = users
   },
