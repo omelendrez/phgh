@@ -11,8 +11,9 @@ const mutations = {
     state.user = user
     state.authenticated = true
   },
-  auth_error (state) {
+  auth_error (state, error) {
     state.status = 'error'
+    state.apiError = error
   },
   logout (state) {
     state.status = ''

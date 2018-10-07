@@ -18,7 +18,7 @@ const actions = {
           resolve(resp)
         })
         .catch(err => {
-          commit('auth_error')
+          commit('auth_error', err.response)
           localStorage.removeItem('token')
           reject(err)
         })
