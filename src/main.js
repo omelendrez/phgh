@@ -4,10 +4,12 @@ import router from './router/index'
 import store from './store/index'
 import axios from 'axios'
 import Vuetify from 'vuetify'
+import VueChartkick from 'vue-chartkick'
 // import firebase from 'firebase'
 import './registerServiceWorker'
 
 Vue.use(Vuetify)
+Vue.use(VueChartkick)
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios

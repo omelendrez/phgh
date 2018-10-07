@@ -20,9 +20,9 @@ const routerOptions = [
     component: 'ForgotPassword'
   },
   {
-    path: '/home',
-    name: 'home',
-    component: 'Home'
+    path: '/dashboard',
+    name: 'dashboard',
+    component: 'Dashboard'
   },
   {
     path: '/users',
