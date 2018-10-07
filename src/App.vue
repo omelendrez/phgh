@@ -5,11 +5,11 @@
         <v-btn class="right" icon @click.stop="showDrawer = false">
           <v-icon>chevron_left</v-icon>
         </v-btn>
-        <v-list-tile @click="home()">
+        <v-list-tile @click="dashboard()">
           <v-list-tile-action>
-            <v-icon>home</v-icon>
+            <v-icon>dashboard</v-icon>
           </v-list-tile-action>
-          <v-list-tile-title>Home</v-list-tile-title>
+          <v-list-tile-title>Dashboard</v-list-tile-title>
         </v-list-tile>
         <v-list-group prepend-icon="account_circle">
           <v-list-tile slot="activator">
@@ -94,7 +94,7 @@ export default {
       showNav: true,
       showAlert: false,
       admins: [
-        ['Management', 'people_outline', this.goUsers],
+        ['Users', 'people_outline', this.goUsers],
         ['Settings', 'settings', this.doThis]
       ],
       cruds: [
@@ -125,8 +125,8 @@ export default {
     }
   },
   methods: {
-    home () {
-      this.$router.push({ name: 'home' })
+    dashboard () {
+      this.$router.push({ name: 'dashboard' })
     },
     logout () {
       this.showDrawer = false
