@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API } from '@/utils'
+import { API, defaultPassword } from '@/utils'
 
 const actions = {
   setAppTitle ({ commit }, payload) {
@@ -45,6 +45,28 @@ const actions = {
         })
         .catch(err => {
           commit('users_error', err.response)
+          reject(err)
+        })
+    })
+  },
+  addUser ({ commit }, { user, isNew }) {
+    return new Promise((resolve, reject) => {
+      commit('add_user_request')
+      if (isNew) {
+        user.password = defaultPassword
+      }
+      axios({ url: API + 'users', data: user, method: isNew ? 'POST' : 'PUT' })
+        .then(resp => {
+          if (resp.data.success) {
+            const user = resp.data.user
+            commit('add_user_success', user)
+          } else {
+            commit('add_user_error', resp)
+          }
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('add_user_error', err.response)
           reject(err)
         })
     })
