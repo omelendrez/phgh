@@ -2,7 +2,7 @@ const state = {
   appTitle: 'PHGH',
   authenticated: false,
   token: localStorage.getItem('token') || '',
-  user: {},
+  user: { first: '', last: '' },
   status: '',
   apiError: null,
   roles: [],
