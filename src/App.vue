@@ -142,6 +142,11 @@ export default {
       this.showDrawer = false
       this.$router.push({ name: 'users' })
     }
+  },
+  created() {
+      if (!this.isAuthenticated) {
+        this.$router.push({ name: 'landing' })
+      }
   }
 }
 </script>
