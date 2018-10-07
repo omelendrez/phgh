@@ -1,5 +1,3 @@
-const constants = {
-  API: 'https://phgh-be.herokuapp.com/v1/'
-}
+const API = 'https://phgh-be.herokuapp.com/v1/'
 
-export default constants
+module.exports.API = API
