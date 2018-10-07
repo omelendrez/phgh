@@ -143,7 +143,7 @@ export default {
       return store.getters.apiError
     },
     newUser () {
-      store.getters.newUser
+      return store.getters.newUser
     },
     users () {
       return store.getters.users
