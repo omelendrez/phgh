@@ -36,11 +36,9 @@ export default {
   }),
   watch: {
     apiError () {
-      if (this.apiError) {
-        //this.apiErrorAlert = this.apiError
-        //this.apiErrorMessage = this.apiError ? this.apiError.data.error : ''
-        this.alertMessage = this.apiError ? this.apiError.data.error : ''
-      }
+      //this.apiErrorAlert = this.apiError
+      //this.apiErrorMessage = this.apiError ? this.apiError.data.error : ''
+      this.alertMessage = this.apiError ? this.apiError.data.error : ''
     }
   },
   computed: {
