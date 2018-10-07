@@ -94,7 +94,7 @@ export default {
       showNav: true,
       showAlert: false,
       admins: [
-        ['Users', 'people_outline', this.goUsers],
+        ['Users', 'people_outline', this.users],
         ['Settings', 'settings', this.doThis]
       ],
       cruds: [
@@ -126,6 +126,7 @@ export default {
   },
   methods: {
     dashboard () {
+      this.showDrawer = false
       this.$router.push({ name: 'dashboard' })
     },
     logout () {
@@ -138,7 +139,7 @@ export default {
     showAlerts () {
       console.log('this show go show the list of alerts')
     },
-    goUsers() {
+    users() {
       this.showDrawer = false
       this.$router.push({ name: 'users' })
     }
