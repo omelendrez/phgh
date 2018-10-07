@@ -31,6 +31,17 @@ const mutations = {
   users_error (state, error) {
     state.status = 'error'
     state.apiError = error
+  },
+  add_user_request (state) {
+    state.status = 'loading'
+  },
+  add_user_success (state, user) {
+    state.status = 'success'
+    state.newUser = user
+  },
+  add_user_error (state, error) {
+    state.status = 'error'
+    state.apiError = error
   }
 }
 

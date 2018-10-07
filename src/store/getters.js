@@ -4,7 +4,8 @@ const getters = {
   appTitle: state => state.appTitle,
   user: state => state.user,
   apiError: state => state.apiError,
-  users: state => state.users
+  users: state => state.users,
+  newUser: state => state.newUser
 }
 
 export default getters

@@ -16,10 +16,10 @@
               <v-flex xs12 sm12 md12>
                 <v-text-field v-model="editedItem.last" label="Last name"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm12 md12>
+              <v-flex xs12 sm12 md12 v-if="!isEditing">
                 <v-text-field v-model="editedItem.email" label="email"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm12 md12>
+              <v-flex xs12 sm12 md12 v-if="!isEditing">
                 <v-text-field v-model="editedItem.phone" label="phone"></v-text-field>
               </v-flex>
             </v-layout>
@@ -55,19 +55,27 @@
     <div class="text-xs-center pt-2">
       <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
     </div>
+    <Snack v-bind:message="alertMessage" />
   </div>
 </template>
 
 <script>
+import Snack from '@/components/Snack';
 import store from '@/store/index'
 
 export default {
+  name: 'Users',
   store,
+  components: {
+    Snack
+  },
   data () {
     return {
       dialog: false,
       pagination: {},
       editedIndex: -1,
+      isEditing: this.editedIndex !== -1,
+      alertMessage: '',
       defaultItem: {
         first: '',
         last: '',
@@ -116,14 +124,27 @@ export default {
     }
   },
   watch: {
+    apiError () {
+      this.alertMessage = this.apiError ? this.apiError.data.error : ''
+    },
     users () {
       this.items = this.users
     },
     dialog (val) {
       val || this.close()
+    },
+    newUser () {
+      store.dispatch('users')
+      this.close()
     }
   },
   computed: {
+    apiError () {
+      return store.getters.apiError
+    },
+    newUser () {
+      store.getters.newUser
+    },
     users () {
       return store.getters.users
     },
@@ -139,6 +160,7 @@ export default {
   methods: {
     close () {
       this.dialog = false
+      store.dispatch('users')
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
@@ -154,11 +176,7 @@ export default {
       confirm('Are you sure you want to delete this user?') && this.items.splice(index, 1)
     },
     save () {
-      if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem)
-      } else {
-        this.items.push(this.editedItem)
-      }
+      store.dispatch('addUser', { user: this.editedItem, isNew: this.editedIndex === -1 }) && this.editedIndex === -1
       this.close()
     }
   },
