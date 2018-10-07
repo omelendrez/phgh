@@ -21,6 +21,17 @@ const mutations = {
     state.user = {}
     state.authenticated = false
   },
+  users_request (state) {
+    state.status = 'loading'
+  },
+  users_success (state, users ) {
+    state.status = 'success'
+    state.users = users
+  },
+  users_error (state, error) {
+    state.status = 'error'
+    state.apiError = error
+  }
 }
 
 export default mutations

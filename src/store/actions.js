@@ -31,6 +31,23 @@ const actions = {
       delete axios.defaults.headers.common['Authorization']
       resolve()
     })
+  },
+  users ({ commit }) {
+    return new Promise((resolve, reject) => {
+      commit('users_request')
+      axios({ url: constants.API + 'users', method: 'GET' })
+        .then(resp => {
+          const users = resp.data.users
+          const token = localStorage.getItem('token')
+          axios.defaults.headers.common['Authorization'] = token
+          commit('users_success', users)
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('users_error', err.response)
+          reject(err)
+        })
+    })
   }
 }
 
