@@ -1,5 +1,5 @@
 import axios from 'axios'
-import constants from '@/utils'
+import { API } from '@/utils'
 
 const actions = {
   setAppTitle ({ commit }, payload) {
@@ -8,7 +8,7 @@ const actions = {
   login ({ commit }, user) {
     return new Promise((resolve, reject) => {
       commit('auth_request')
-      axios({ url: constants.API + 'users/login', data: user, method: 'POST' })
+      axios({ url: API + 'users/login', data: user, method: 'POST' })
         .then(resp => {
           const token = resp.data.token
           const user = resp.data.user
@@ -35,7 +35,7 @@ const actions = {
   users ({ commit }) {
     return new Promise((resolve, reject) => {
       commit('users_request')
-      axios({ url: constants.API + 'users', method: 'GET' })
+      axios({ url: API + 'users', method: 'GET' })
         .then(resp => {
           const users = resp.data.users
           const token = localStorage.getItem('token')
