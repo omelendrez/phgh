@@ -50,12 +50,19 @@
       <v-toolbar-side-icon @click.stop="showDrawer = !showDrawer" v-if="isAuthenticated"></v-toolbar-side-icon>
       <v-toolbar-title>{{appTitle}}</v-toolbar-title>
       <v-spacer></v-spacer>
+
       <v-badge v-if="showAlert && isAuthenticated">
         <v-icon @click="showAlerts" color="yellow">
           error
         </v-icon>
       </v-badge>
-      <span>{{userName}}</span>
+
+      <span class="user-name">{{userName}}</span>
+
+      <v-icon>
+        person
+      </v-icon>
+
     </v-toolbar>
     <v-content>
       <v-container fluid>
@@ -114,8 +121,7 @@ export default {
   },
   computed: {
     userName () {
-      const sg = store.getters.user
-      return sg.first + ' ' + sg.last
+      return store.getters.user.first
     },
     isAuthenticated () {
       return store.getters.isAuthenticated
@@ -139,18 +145,21 @@ export default {
     showAlerts () {
       console.log('this show go show the list of alerts')
     },
-    users() {
+    users () {
       this.showDrawer = false
       this.$router.push({ name: 'users' })
     }
   },
-  created() {
-      if (!this.isAuthenticated) {
-        this.$router.push({ name: 'landing' })
-      }
+  created () {
+    if (!this.isAuthenticated) {
+      this.$router.push({ name: 'landing' })
+    }
   }
 }
 </script>
 
 <style>
+.user-name {
+  margin-right: 14px;
+}
 </style>
