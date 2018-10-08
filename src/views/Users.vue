@@ -74,7 +74,6 @@ export default {
       dialog: false,
       pagination: {},
       editedIndex: -1,
-      isEditing: this.editedIndex !== -1,
       alertMessage: '',
       defaultItem: {
         first: '',
@@ -155,6 +154,9 @@ export default {
     },
     formTitle () {
       return this.editedIndex === -1 ? 'Add User' : 'Edit User'
+    },
+    isEditing () {
+      return this.editedIndex !== -1
     }
   },
   methods: {
