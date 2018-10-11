@@ -39,6 +39,8 @@
         <td>{{ props.item.last }}</td>
         <td>{{ props.item.email }}</td>
         <td>{{ props.item.phone }}</td>
+        <td>{{ formatDate(props.item.createdAt) }}</td>
+        <td>{{ formatDate(props.item.updatedAt) }}</td>
         <td class="justify-center layout pt-2">
           <v-icon small class="mr-2" @click="editItem(props.item)">
             edit
@@ -60,6 +62,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import Snack from '@/components/Snack';
 import store from '@/store/index'
 
@@ -113,6 +116,18 @@ export default {
           sortable: false
         },
         {
+          text: 'Created',
+          value: 'createdAt',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Changed',
+          value: 'updatedAt',
+          align: 'left',
+          sortable: false
+        },
+        {
           text: 'Actions',
           value: 'name',
           align: 'cener',
@@ -148,9 +163,12 @@ export default {
       return store.getters.users
     },
     pages () {
-      this.pagination.totalItems = this.items ? this.items.length : 0
-      if (this.pagination.rowsPerPage === null) return 0
-      return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+      if (this.pagination.rowsPerPage === null) {
+        return 0
+      }else {
+        this.setTotalItems()
+        return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+      }
     },
     formTitle () {
       return this.editedIndex === -1 ? 'Add User' : 'Edit User'
@@ -160,6 +178,12 @@ export default {
     }
   },
   methods: {
+    formatDate (date)  {
+      return moment(date).fromNow()
+    },
+    setTotalItems() {
+      this.pagination.totalItems = this.items ? this.items.length : 0
+    },
     close () {
       this.dialog = false
       store.dispatch('users')
