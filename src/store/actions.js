@@ -18,7 +18,8 @@ const actions = {
           resolve(resp)
         })
         .catch(err => {
-          commit('auth_error', err.response)
+          const error = err.response || { data: { error: 'Problem trying to connect with the backend server' } }
+          commit('auth_error', error)
           localStorage.removeItem('token')
           reject(err)
         })

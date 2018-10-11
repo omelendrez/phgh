@@ -1,4 +1,2 @@
-const API = 'https://phgh-be.herokuapp.com/v1/'
-
-
-module.exports.API = API
+module.exports.API = 'https://phgh-be.herokuapp.com/v1/'
+module.exports.defaultPassword = 'FITTOC'
