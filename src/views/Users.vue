@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <v-container fluid>
     <v-dialog v-model="dialog" max-width="500px">
-      <v-btn slot="activator" color="primary" dark class="mb-3">Add user</v-btn>
+      <v-btn slot="activator" color="blue-grey white--text">Add user</v-btn>
+
       <v-card>
+
         <v-card-title>
           <span class="headline">{{ formTitle }}</span>
         </v-card-title>
@@ -31,14 +33,18 @@
           <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
           <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
         </v-card-actions>
+
       </v-card>
     </v-dialog>
+
     <v-data-table :headers="headers" :items="items" :pagination.sync="pagination" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
         <td>{{ props.item.first }}</td>
         <td>{{ props.item.last }}</td>
         <td>{{ props.item.email }}</td>
         <td>{{ props.item.phone }}</td>
+        <td>{{ formatDate(props.item.createdAt) }}</td>
+        <td>{{ formatDate(props.item.updatedAt) }}</td>
         <td class="justify-center layout pt-2">
           <v-icon small class="mr-2" @click="editItem(props.item)">
             edit
@@ -49,17 +55,20 @@
         </td>
       </template>
       <template slot="no-data">
-        Sorry, nothing to display here :(
+        <v-icon color="error">cancel</v-icon> Sorry, nothing to display here
       </template>
     </v-data-table>
     <div class="text-xs-center pt-2">
       <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
     </div>
+
     <Snack v-bind:message="alertMessage" />
-  </div>
+
+  </v-container>
 </template>
 
 <script>
+import moment from 'moment'
 import Snack from '@/components/Snack';
 import store from '@/store/index'
 
@@ -113,6 +122,18 @@ export default {
           sortable: false
         },
         {
+          text: 'Created',
+          value: 'createdAt',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Changed',
+          value: 'updatedAt',
+          align: 'left',
+          sortable: false
+        },
+        {
           text: 'Actions',
           value: 'name',
           align: 'cener',
@@ -148,9 +169,12 @@ export default {
       return store.getters.users
     },
     pages () {
-      this.pagination.totalItems = this.items ? this.items.length : 0
-      if (this.pagination.rowsPerPage === null) return 0
-      return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+      if (!this.pagination.rowsPerPage || !this.items.length) {
+        return 0
+      } else {
+        this.pagination.totalItems = this.items.length
+        return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+      }
     },
     formTitle () {
       return this.editedIndex === -1 ? 'Add User' : 'Edit User'
@@ -160,6 +184,9 @@ export default {
     }
   },
   methods: {
+    formatDate (date) {
+      return moment(date).fromNow()
+    },
     close () {
       this.dialog = false
       store.dispatch('users')
@@ -181,7 +208,6 @@ export default {
       if (this.editedIndex === -1) {
         store.dispatch('addUser', { user: this.editedItem, isNew: this.editedIndex === -1 })
       }
-      this.close()
     }
   },
   created () {
@@ -190,3 +216,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+</style>

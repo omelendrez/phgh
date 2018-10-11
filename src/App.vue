@@ -65,9 +65,7 @@
 
     </v-toolbar>
     <v-content>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
+      <router-view></router-view>
     </v-content>
     <v-footer app v-if="isAuthenticated">
       <v-bottom-nav :active.sync="activeBtn" :value="showNav" absolute color="transparent">
