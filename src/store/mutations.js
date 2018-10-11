@@ -2,8 +2,13 @@ const mutations = {
   setAppTitle (state, payload) {
     state.appTitle = payload
   },
-  auth_request (state) {
+  start_request (state) {
     state.status = 'loading'
+    state.apiError = null
+  },
+  request_error (state, error) {
+    state.status = 'error'
+    state.apiError = error
   },
   auth_success (state, { token, user }) {
     state.status = 'success'
@@ -11,37 +16,19 @@ const mutations = {
     state.user = user
     state.authenticated = true
   },
-  auth_error (state, error) {
-    state.status = 'error'
-    state.apiError = error
-  },
   logout (state) {
     state.status = ''
     state.token = ''
     state.user = { first: '', last: '' }
     state.authenticated = false
   },
-  users_request (state) {
-    state.status = 'loading'
-  },
   users_success (state, users) {
     state.status = 'success'
     state.users = users
   },
-  users_error (state, error) {
-    state.status = 'error'
-    state.apiError = error
-  },
-  add_user_request (state) {
-    state.status = 'loading'
-  },
   add_user_success (state, user) {
     state.status = 'success'
     state.newUser = user
-  },
-  add_user_error (state, error) {
-    state.status = 'error'
-    state.apiError = error
   }
 }
 

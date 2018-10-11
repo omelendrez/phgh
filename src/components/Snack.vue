@@ -12,14 +12,12 @@ export default {
   name: 'Snack',
   data: () => ({
     showSnack: false,
-    timeout: 0,
+    timeout: 5000,
     top: true
   }),
   watch: {
     message () {
-      if (this.message.length > 0) {
-        this.showSnack = true
-      }
+      this.showSnack = this.message.length
     }
   },
   props: {

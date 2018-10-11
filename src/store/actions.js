@@ -1,13 +1,19 @@
 import axios from 'axios'
 import { API, defaultPassword } from '@/utils'
 
+const handleError = err => {
+  return err.response || {
+    data: { error: 'There is a problem trying to connect to backend server' }
+  }
+}
+
 const actions = {
   setAppTitle ({ commit }, payload) {
     commit('setAppTitle', payload)
   },
   login ({ commit }, user) {
     return new Promise((resolve, reject) => {
-      commit('auth_request')
+      commit('start_request')
       axios({ url: API + 'users/login', data: user, method: 'POST' })
         .then(resp => {
           const token = resp.data.token
@@ -18,7 +24,8 @@ const actions = {
           resolve(resp)
         })
         .catch(err => {
-          commit('auth_error', err.response)
+          handleError(err)
+          commit('request_error', handleError(err))
           localStorage.removeItem('token')
           reject(err)
         })
@@ -34,7 +41,7 @@ const actions = {
   },
   users ({ commit }) {
     return new Promise((resolve, reject) => {
-      commit('users_request')
+      commit('start_request')
       axios({ url: API + 'users', method: 'GET' })
         .then(resp => {
           const users = resp.data.users
@@ -44,14 +51,14 @@ const actions = {
           resolve(resp)
         })
         .catch(err => {
-          commit('users_error', err.response)
+          commit('request_error', handleError(err))
           reject(err)
         })
     })
   },
   addUser ({ commit }, { user, isNew }) {
     return new Promise((resolve, reject) => {
-      commit('add_user_request')
+      commit('start_request')
       if (isNew) {
         user.password = defaultPassword
       }
@@ -61,12 +68,12 @@ const actions = {
             const user = resp.data.user
             commit('add_user_success', user)
           } else {
-            commit('add_user_error', resp)
+            commit('request_error', resp)
           }
           resolve(resp)
         })
         .catch(err => {
-          commit('add_user_error', err.response)
+          commit('request_error', handleError(err))
           reject(err)
         })
     })
