@@ -1,4 +1,4 @@
-const API = 'http://localhost:3000/v1/'
+const API = 'https://phgh-be.herokuapp.com/v1/'
 const defaultPassword = 'FITTOC'
 
 export { API, defaultPassword }
