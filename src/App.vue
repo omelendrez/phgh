@@ -77,21 +77,27 @@
         </v-btn>
       </v-bottom-nav>
     </v-footer>
+    <Snack v-bind:message="alertMessage" />
   </v-app>
 </template>
 
 <script>
 import store from '@/store/index'
+import Snack from '@/components/Snack';
 
 export default {
   name: 'app',
   store,
+  components: {
+    Snack
+  },
   data () {
     return {
       showDrawer: false,
       activeBtn: 1,
       showNav: true,
       showAlert: false,
+      alertMessage: null,
       admins: [
         ['Users', 'person', this.users],
         ['Roles', 'supervisor_account', this.roles]
@@ -99,6 +105,12 @@ export default {
     }
   },
   watch: {
+    apiMessage () {
+      this.alertMessage = this.apiMessage
+    },
+    apiError () {
+      this.alertMessage = this.apiError ? this.apiError.data.error : ''
+    },
     isAuthenticated () {
       if (!this.isAuthenticated) {
         this.$router.push({ name: 'landing' })
@@ -106,6 +118,12 @@ export default {
     }
   },
   computed: {
+    apiMessage () {
+      return store.getters.apiMessage
+    },
+    apiError () {
+      return store.getters.apiError
+    },
     userName () {
       return store.getters.user.first
     },

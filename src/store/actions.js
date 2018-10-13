@@ -18,9 +18,10 @@ const actions = {
         .then(resp => {
           const token = resp.data.token
           const user = resp.data.user
+          const message = resp.data.message
           localStorage.setItem('token', token)
           axios.defaults.headers.common['Authorization'] = token
-          commit('auth_success', { token, user })
+          commit('auth_success', { token, user, message })
           resolve(resp)
         })
         .catch(err => {

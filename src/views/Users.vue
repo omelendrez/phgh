@@ -61,28 +61,21 @@
       <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
     </div>
 
-    <Snack v-bind:message="alertMessage" />
-
   </v-container>
 </template>
 
 <script>
 import moment from 'moment'
-import Snack from '@/components/Snack';
 import store from '@/store/index'
 
 export default {
   name: 'Users',
   store,
-  components: {
-    Snack
-  },
   data () {
     return {
       dialog: false,
       pagination: {},
       editedIndex: -1,
-      alertMessage: '',
       showPassword: false,
       rules: {
         required: value => !!value || 'Required.',
@@ -150,12 +143,6 @@ export default {
     }
   },
   watch: {
-    apiMessage() {
-      this.alertMessage = this.apiMessage
-    },
-    apiError () {
-      this.alertMessage = this.apiError ? this.apiError.data.error : ''
-    },
     users () {
       this.items = this.users
     },
@@ -168,12 +155,6 @@ export default {
     }
   },
   computed: {
-    apiMessage() {
-      return store.getters.apiMessage
-    },
-    apiError () {
-      return store.getters.apiError
-    },
     newUser () {
       return store.getters.newUser
     },
