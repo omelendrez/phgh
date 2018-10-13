@@ -1,39 +1,38 @@
 <template>
   <v-container fluid>
+
     <v-dialog v-model="dialog" max-width="500px">
-      <v-btn slot="activator" color="blue-grey white--text">Add user</v-btn>
-
+      <v-btn slot="activator" small color="blue-grey white--text" class="add-user">Add user</v-btn>
       <v-card>
-
         <v-card-title>
           <span class="headline">{{ formTitle }}</span>
         </v-card-title>
-
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm12 md12>
-                <v-text-field v-model="editedItem.first" label="First name"></v-text-field>
+                <v-text-field v-model="editedItem.first" :rules="[rules.required]" label="First name"></v-text-field>
               </v-flex>
               <v-flex xs12 sm12 md12>
-                <v-text-field v-model="editedItem.last" label="Last name"></v-text-field>
+                <v-text-field v-model="editedItem.last" :rules="[rules.required]" label="Last name"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm12 md12 v-if="!isEditing">
-                <v-text-field v-model="editedItem.email" label="email"></v-text-field>
+              <v-flex xs12 sm12 md12>
+                <v-text-field v-model="editedItem.email" :rules="[rules.required]" label="E-mail"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm12 md12 v-if="!isEditing">
-                <v-text-field v-model="editedItem.phone" label="phone"></v-text-field>
+              <v-flex xs12 sm12 md12>
+                <v-text-field v-model="editedItem.phone" mask="phone" :rules="[rules.required]" label="Phone"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm12 md12>
+                <v-text-field v-model="editedItem.password" :append-icon="showPassword ? 'visibility_off' : 'visibility'" :rules="[rules.required, rules.min]" :type="showPassword ? 'text' : 'password'" label="Password" hint="At least 8 characters" counter @click:append="showPassword = !showPassword"></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
-
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
           <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
         </v-card-actions>
-
       </v-card>
     </v-dialog>
 
@@ -46,10 +45,10 @@
         <td>{{ formatDate(props.item.createdAt) }}</td>
         <td>{{ formatDate(props.item.updatedAt) }}</td>
         <td class="justify-center layout pt-2">
-          <v-icon small class="mr-2" @click="editItem(props.item)">
+          <v-icon small class="mr-2" @click="editItem(props.item)" v-if="user.id !== props.item.id">
             edit
           </v-icon>
-          <v-icon small @click="deleteItem(props.item)">
+          <v-icon small @click="deleteItem(props.item)" v-if="user.id !== props.item.id">
             delete
           </v-icon>
         </td>
@@ -84,17 +83,24 @@ export default {
       pagination: {},
       editedIndex: -1,
       alertMessage: '',
+      showPassword: false,
+      rules: {
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 8 || 'Min 8 characters'
+      },
       defaultItem: {
         first: '',
         last: '',
         email: '',
-        phone: ''
+        phone: '',
+        password: ''
       },
       editedItem: {
         first: '',
         last: '',
         email: '',
-        phone: ''
+        phone: '',
+        password: ''
       },
       headers: [
         {
@@ -181,6 +187,9 @@ export default {
     },
     isEditing () {
       return this.editedIndex !== -1
+    },
+    user() {
+      return store.getters.user
     }
   },
   methods: {
@@ -197,17 +206,14 @@ export default {
     },
     editItem (item) {
       this.editedIndex = this.items.indexOf(item)
-      this.editedItem = Object.assign({}, item)
+      this.editedItem = Object.assign({ password: '' }, item)
       this.dialog = true
     },
     deleteItem (item) {
-      const index = this.items.indexOf(item)
-      confirm('Are you sure you want to delete this user?') && this.items.splice(index, 1)
+      confirm('Are you sure you want to delete this user?') && store.dispatch('deleteUser', { user: item })
     },
     save () {
-      if (this.editedIndex === -1) {
-        store.dispatch('addUser', { user: this.editedItem, isNew: this.editedIndex === -1 })
-      }
+      store.dispatch('saveUser', { user: this.editedItem, isNew: this.editedIndex === -1 })
     }
   },
   created () {
@@ -218,5 +224,7 @@ export default {
 </script>
 
 <style scoped>
-
+.add-user {
+  margin-bottom: 20px;
+}
 </style>
