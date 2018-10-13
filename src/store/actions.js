@@ -18,9 +18,10 @@ const actions = {
         .then(resp => {
           const token = resp.data.token
           const user = resp.data.user
+          const message = resp.data.message
           localStorage.setItem('token', token)
           axios.defaults.headers.common['Authorization'] = token
-          commit('auth_success', { token, user })
+          commit('auth_success', { token, user, message })
           resolve(resp)
         })
         .catch(err => {
@@ -66,7 +67,8 @@ const actions = {
         .then(resp => {
           if (resp.data.success) {
             const user = resp.data.user
-            commit('save_user_success', user)
+            const message = resp.data.message
+            commit('save_user_success', { user, message })
           } else {
             commit('request_error', resp)
           }
@@ -85,7 +87,8 @@ const actions = {
         .then(resp => {
           if (resp.data.success) {
             const user = resp.data.user
-            commit('delete_user_success', user)
+            const message = resp.data.message
+            commit('delete_user_success', { user, message })
           } else {
             commit('request_error', resp)
           }
@@ -113,8 +116,50 @@ const actions = {
           reject(err)
         })
     })
+  },
+  saveRole ({ commit }, { role, isNew }) {
+    return new Promise((resolve, reject) => {
+      commit('start_request')
+      axios({ url: API + 'roles', data: role, method: isNew ? 'POST' : 'PUT' })
+        .then(resp => {
+          if (resp.data.success) {
+            const role = resp.data.role
+            const message = resp.data.message
+            commit('save_role_success', { role, message })
+          } else {
+            commit('request_error', resp)
+          }
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('request_error', handleError(err))
+          reject(err)
+        })
+    })
+  },
+  deleteRole ({ commit }, { role }) {
+    return new Promise((resolve, reject) => {
+      commit('start_request')
+      axios({ url: API + 'roles', data: role, method: 'DELETE' })
+        .then(resp => {
+          if (resp.data.success) {
+            const role = resp.data.role
+            const message = resp.data.message
+            commit('delete_role_success', { role, message })
+          } else {
+            commit('request_error', resp)
+          }
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('request_error', handleError(err))
+          reject(err)
+        })
+    })
+  },
+  getConfirm ({ commit }, { confirm }) {
+    commit('confirm', confirm)
   }
-
 }
 
 export default actions

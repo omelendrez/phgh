@@ -26,7 +26,6 @@
 
     <v-data-table :headers="headers" :items="items" :pagination.sync="pagination" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.id }}</td>
         <td>{{ props.item.name }}</td>
         <td>{{ formatDate(props.item.createdAt) }}</td>
         <td>{{ formatDate(props.item.updatedAt) }}</td>
@@ -47,28 +46,21 @@
       <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
     </div>
 
-    <Snack v-bind:message="alertMessage" />
-
   </v-container>
 </template>
 
 <script>
 import moment from 'moment'
-import Snack from '@/components/Snack';
 import store from '@/store/index'
 
 export default {
   name: 'Roles',
   store,
-  components: {
-    Snack
-  },
   data () {
     return {
       dialog: false,
       pagination: {},
       editedIndex: -1,
-      alertMessage: '',
       showPassword: false,
       rules: {
         required: value => !!value || 'Required.'
@@ -80,12 +72,6 @@ export default {
         name: ''
       },
       headers: [
-        {
-          text: 'ID',
-          value: 'id',
-          align: 'left',
-          sortable: true
-        },
         {
           text: 'Name',
           value: 'name',
@@ -115,9 +101,6 @@ export default {
     }
   },
   watch: {
-    apiError () {
-      this.alertMessage = this.apiError ? this.apiError.data.error : ''
-    },
     roles () {
       this.items = this.roles
     },
@@ -130,9 +113,6 @@ export default {
     }
   },
   computed: {
-    apiError () {
-      return store.getters.apiError
-    },
     newRole () {
       return store.getters.newRole
     },
@@ -172,7 +152,15 @@ export default {
       this.dialog = true
     },
     deleteItem (item) {
-      confirm('Are you sure you want to delete this role?') && store.dispatch('deleteRole', { role: item })
+      const confirm = {
+        confirm: {
+          title: 'Are you sure?',
+          text: 'Be cautious as you are deleting a role and this action cannot be undone. Continue with deleting?',
+          action: 'deleteRole',
+          item: { role: item }
+        }
+      }
+      store.dispatch('getConfirm', confirm)
     },
     save () {
       store.dispatch('saveRole', { role: this.editedItem, isNew: this.editedIndex === -1 })

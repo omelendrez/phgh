@@ -61,28 +61,21 @@
       <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
     </div>
 
-    <Snack v-bind:message="alertMessage" />
-
   </v-container>
 </template>
 
 <script>
 import moment from 'moment'
-import Snack from '@/components/Snack';
 import store from '@/store/index'
 
 export default {
   name: 'Users',
   store,
-  components: {
-    Snack
-  },
   data () {
     return {
       dialog: false,
       pagination: {},
       editedIndex: -1,
-      alertMessage: '',
       showPassword: false,
       rules: {
         required: value => !!value || 'Required.',
@@ -150,9 +143,6 @@ export default {
     }
   },
   watch: {
-    apiError () {
-      this.alertMessage = this.apiError ? this.apiError.data.error : ''
-    },
     users () {
       this.items = this.users
     },
@@ -165,9 +155,6 @@ export default {
     }
   },
   computed: {
-    apiError () {
-      return store.getters.apiError
-    },
     newUser () {
       return store.getters.newUser
     },
@@ -188,7 +175,7 @@ export default {
     isEditing () {
       return this.editedIndex !== -1
     },
-    user() {
+    user () {
       return store.getters.user
     }
   },
@@ -210,7 +197,15 @@ export default {
       this.dialog = true
     },
     deleteItem (item) {
-      confirm('Are you sure you want to delete this user?') && store.dispatch('deleteUser', { user: item })
+      const confirm = {
+        confirm: {
+          title: 'Are you sure?',
+          text: 'Be cautious as you are deleting a user and this action cannot be undone. Continue with deleting?',
+          action: 'deleteUser',
+          item: { user: item }
+        }
+      }
+      store.dispatch('getConfirm', confirm)
     },
     save () {
       store.dispatch('saveUser', { user: this.editedItem, isNew: this.editedIndex === -1 })
