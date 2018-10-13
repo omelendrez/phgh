@@ -236,7 +236,6 @@ export default {
       const user = this.editedItem
       store.dispatch('saveUser', { user: user, isNew: this.editedIndex === -1 })
       if (user.roles.length) {
-        const userId = user.id
         const list = []
         user.roles.map(role => {
           const userRole = { UserId: user.id, RoleId: this.roles.find(item => item.name === role).id }
