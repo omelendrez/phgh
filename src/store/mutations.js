@@ -1,5 +1,3 @@
-import { stat } from "fs";
-
 const mutations = {
   setAppTitle (state, payload) {
     state.appTitle = payload
