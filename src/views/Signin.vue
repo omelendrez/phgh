@@ -1,8 +1,8 @@
 <template>
   <v-container class="signin">
     <v-form v-model="valid" ref="form">
-      <v-text-field v-model="email" label="E-mail" required></v-text-field>
-      <v-text-field v-model="password" type="password" label="Password" required></v-text-field>
+      <v-text-field v-model="email" label="E-mail"  :rules="[rules.required]"></v-text-field>
+      <v-text-field v-model="password" :append-icon="showPassword ? 'visibility_off' : 'visibility'" :rules="[rules.required, rules.min]" :type="showPassword ? 'text' : 'password'" label="Password" hint="At least 8 characters" counter @click:append="showPassword = !showPassword"></v-text-field>
       <v-btn block color="primary" :disabled="activeSubmit" @click="submit">Sign In</v-btn>
       <v-alert v-model="apiErrorAlert" type="error">
         {{apiErrorMessage}}
@@ -32,7 +32,12 @@ export default {
     apiErrorMessage: '',
     alertMessage: '',
     email: '',
-    password: ''
+    password: '',
+    showPassword: false,
+    rules: {
+      required: value => !!value || 'Required.',
+      min: v => v.length >= 8 || 'Min 8 characters'
+    }
   }),
   watch: {
     apiError () {
