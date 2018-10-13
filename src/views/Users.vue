@@ -159,6 +159,20 @@ export default {
       this.roles.map(item => roleItems.push(item.name))
       this.roleItems = roleItems
     },
+    userRoles () {
+      if (this.userRoles) {
+        const rolesList = []
+        this.roles.map(role => {
+          this.userRoles.map(item => {
+            if (item.RoleId === role.id) {
+              rolesList.push(role.name)
+            }
+          })
+        })
+        this.editedItem.roles = rolesList
+      }
+      this.dialog = true
+    },
     dialog (val) {
       val || this.close()
     },
@@ -176,6 +190,9 @@ export default {
     },
     roles () {
       return store.getters.roles
+    },
+    userRoles () {
+      return store.getters.userRoles
     },
     pages () {
       if (!this.pagination.rowsPerPage || !this.items.length) {
@@ -210,16 +227,7 @@ export default {
     editItem (item) {
       this.editedIndex = this.items.indexOf(item)
       this.editedItem = Object.assign({ password: '', roles: [] }, item)
-      if (item.UserRoles) {
-        this.roles.map(role => {
-          item.UserRoles.map(item => {
-            if (item.RoleId === role.id) {
-              this.editedItem.roles.push(role.name)
-            }
-          })
-        })
-      }
-      this.dialog = true
+      store.dispatch('userRoles', { UserId: item.id })
     },
     deleteItem (item) {
       const confirm = {
