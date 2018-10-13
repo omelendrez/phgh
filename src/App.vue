@@ -11,13 +11,15 @@
           </v-list-tile-action>
           <v-list-tile-title>Dashboard</v-list-tile-title>
         </v-list-tile>
-        <v-list-group prepend-icon="account_circle">
+
+        <v-list-group prepend-icon="settings">
           <v-list-tile slot="activator">
-            <v-list-tile-title>Users</v-list-tile-title>
+            <v-list-tile-title>Settings</v-list-tile-title>
           </v-list-tile>
-          <v-list-group no-action sub-group>
+
+          <v-list-group sub-group no-action>
             <v-list-tile slot="activator">
-              <v-list-tile-title>Admin</v-list-tile-title>
+              <v-list-tile-title>Access</v-list-tile-title>
             </v-list-tile>
             <v-list-tile v-for="(admin, i) in admins" :key="i" @click="admin[2]">
               <v-list-tile-title v-text="admin[0]"></v-list-tile-title>
@@ -26,24 +28,16 @@
               </v-list-tile-action>
             </v-list-tile>
           </v-list-group>
-          <v-list-group sub-group no-action>
-            <v-list-tile slot="activator">
-              <v-list-tile-title>Actions</v-list-tile-title>
-            </v-list-tile>
-            <v-list-tile v-for="(crud, i) in cruds" :key="i" @click="crud[2]">
-              <v-list-tile-title v-text="crud[0]"></v-list-tile-title>
-              <v-list-tile-action>
-                <v-icon v-text="crud[1]"></v-icon>
-              </v-list-tile-action>
-            </v-list-tile>
-          </v-list-group>
+
         </v-list-group>
+
         <v-list-tile @click="logout()">
           <v-list-tile-action>
             <v-icon>power_settings_new</v-icon>
           </v-list-tile-action>
           <v-list-tile-title>Logout</v-list-tile-title>
         </v-list-tile>
+
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="blue-grey" dark>
@@ -99,15 +93,9 @@ export default {
       showNav: true,
       showAlert: false,
       admins: [
-        ['Users', 'people_outline', this.users],
-        ['Settings', 'settings', this.doThis]
+        ['Users', 'person', this.users],
+        ['Roles', 'supervisor_account', this.roles]
       ],
-      cruds: [
-        ['Create', 'add', this.doThis],
-        ['Read', 'insert_drive_file', this.doThis],
-        ['Update', 'update', this.doThis],
-        ['Delete', 'delete', this.doThis]
-      ]
     }
   },
   watch: {
@@ -137,15 +125,16 @@ export default {
       this.showDrawer = false
       store.dispatch('logout')
     },
-    doThis (e) {
-      console.log('called', e)
-    },
     showAlerts () {
       console.log('this show go show the list of alerts')
     },
     users () {
       this.showDrawer = false
       this.$router.push({ name: 'users' })
+    },
+    roles () {
+      this.showDrawer = false
+      this.$router.push({ name: 'roles' })
     }
   },
   created () {
