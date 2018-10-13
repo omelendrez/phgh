@@ -19,6 +19,7 @@ const state = {
     action: null,
     item: null
   },
-  actionStatus: null
+  actionStatus: null,
+  userRoles: []
 }
 export default state

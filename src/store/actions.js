@@ -171,6 +171,23 @@ const actions = {
           reject(err)
         })
     })
+  },
+  userRoles ({ commit }, user) {
+    return new Promise((resolve, reject) => {
+      commit('start_request')
+      axios({ url: API + 'userroles/' + user.UserId, data: user, method: 'GET' })
+        .then(resp => {
+          const userRoles = resp.data.userRoles
+          const token = localStorage.getItem('token')
+          axios.defaults.headers.common['Authorization'] = token
+          commit('user_roles_success', userRoles)
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('request_error', handleError(err))
+          reject(err)
+        })
+    })
   }
 }
 

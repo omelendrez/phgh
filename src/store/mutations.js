@@ -57,6 +57,10 @@ const mutations = {
   confirm (state, confirm) {
     state.actionStatus = null
     state.confirm = confirm
+  },
+  user_roles_success (state, userRoles) {
+    state.status = 'success'
+    state.userRoles = userRoles
   }
 }
 
