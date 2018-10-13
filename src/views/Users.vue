@@ -175,7 +175,7 @@ export default {
     isEditing () {
       return this.editedIndex !== -1
     },
-    user() {
+    user () {
       return store.getters.user
     }
   },
@@ -197,7 +197,15 @@ export default {
       this.dialog = true
     },
     deleteItem (item) {
-      confirm('Are you sure you want to delete this user?') && store.dispatch('deleteUser', { user: item })
+      const confirm = {
+        confirm: {
+          title: 'Are you sure?',
+          text: 'Be cautious as you are deleting a user and this action cannot be undone. Continue with deleting?',
+          action: 'deleteUser',
+          item: { user: item }
+        }
+      }
+      store.dispatch('getConfirm', confirm)
     },
     save () {
       store.dispatch('saveUser', { user: this.editedItem, isNew: this.editedIndex === -1 })

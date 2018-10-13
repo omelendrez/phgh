@@ -156,6 +156,9 @@ const actions = {
           reject(err)
         })
     })
+  },
+  getConfirm ({ commit }, { confirm }) {
+    commit('confirm', confirm)
   }
 }
 

@@ -1,3 +1,5 @@
+import { stat } from "fs";
+
 const mutations = {
   setAppTitle (state, payload) {
     state.appTitle = payload
@@ -37,6 +39,7 @@ const mutations = {
     state.status = 'success'
     state.newUser = user
     state.apiMessage = message
+    state.actionStatus = 'success'
   },
   roles_success (state, roles) {
     state.status = 'success'
@@ -51,6 +54,11 @@ const mutations = {
     state.status = 'success'
     state.newRole = role
     state.apiMessage = message
+    state.actionStatus = 'success'
+  },
+  confirm (state, confirm) {
+    state.actionStatus = null
+    state.confirm = confirm
   }
 }
 

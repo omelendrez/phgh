@@ -46,7 +46,6 @@
       <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
     </div>
 
-
   </v-container>
 </template>
 
@@ -153,7 +152,15 @@ export default {
       this.dialog = true
     },
     deleteItem (item) {
-      confirm('Are you sure you want to delete this role?') && store.dispatch('deleteRole', { role: item })
+      const confirm = {
+        confirm: {
+          title: 'Are you sure?',
+          text: 'Be cautious as you are deleting a role and this action cannot be undone. Continue with deleting?',
+          action: 'deleteRole',
+          item: { role: item }
+        }
+      }
+      store.dispatch('getConfirm', confirm)
     },
     save () {
       store.dispatch('saveRole', { role: this.editedItem, isNew: this.editedIndex === -1 })

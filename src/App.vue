@@ -78,18 +78,21 @@
       </v-bottom-nav>
     </v-footer>
     <Snack v-bind:message="alertMessage" />
+    <Dialog v-bind:confirm="confirmData" />
   </v-app>
 </template>
 
 <script>
 import store from '@/store/index'
-import Snack from '@/components/Snack';
+import Snack from '@/components/Snack'
+import Dialog from '@/components/Dialog'
 
 export default {
   name: 'app',
   store,
   components: {
-    Snack
+    Snack,
+    Dialog
   },
   data () {
     return {
@@ -98,6 +101,7 @@ export default {
       showNav: true,
       showAlert: false,
       alertMessage: null,
+      confirmData: null,
       admins: [
         ['Users', 'person', this.users],
         ['Roles', 'supervisor_account', this.roles]
@@ -111,6 +115,9 @@ export default {
     apiError () {
       this.alertMessage = this.apiError ? this.apiError.data.error : ''
     },
+    confirm () {
+      this.confirmData = store.getters.confirm
+    },
     isAuthenticated () {
       if (!this.isAuthenticated) {
         this.$router.push({ name: 'landing' })
@@ -123,6 +130,9 @@ export default {
     },
     apiError () {
       return store.getters.apiError
+    },
+    confirm () {
+      return store.getters.confirm
     },
     userName () {
       return store.getters.user.first
@@ -159,6 +169,7 @@ export default {
     if (!this.isAuthenticated) {
       this.$router.push({ name: 'landing' })
     }
+    this.confirmData = store.getters.confirm
   }
 }
 </script>
