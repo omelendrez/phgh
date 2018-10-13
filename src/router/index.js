@@ -28,6 +28,11 @@ const routerOptions = [
     path: '/users',
     name: 'users',
     component: 'Users'
+  },
+  {
+    path: '/roles',
+    name: 'roles',
+    component: 'Roles'
   }
 ]
 

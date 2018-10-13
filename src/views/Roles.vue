@@ -2,7 +2,7 @@
   <v-container fluid>
 
     <v-dialog v-model="dialog" max-width="500px">
-      <v-btn slot="activator" small color="blue-grey white--text" class="add-user">Add user</v-btn>
+      <v-btn slot="activator" small color="blue-grey white--text" class="add-role">Add role</v-btn>
       <v-card>
         <v-card-title>
           <span class="headline">{{ formTitle }}</span>
@@ -11,19 +11,7 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm12 md12>
-                <v-text-field v-model="editedItem.first" :rules="[rules.required]" label="First name"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm12 md12>
-                <v-text-field v-model="editedItem.last" :rules="[rules.required]" label="Last name"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm12 md12>
-                <v-text-field v-model="editedItem.email" :rules="[rules.required]" label="E-mail"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm12 md12>
-                <v-text-field v-model="editedItem.phone" mask="phone" :rules="[rules.required]" label="Phone"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm12 md12>
-                <v-text-field v-model="editedItem.password" :append-icon="showPassword ? 'visibility_off' : 'visibility'" :rules="[rules.required, rules.min]" :type="showPassword ? 'text' : 'password'" label="Password" hint="At least 8 characters" counter @click:append="showPassword = !showPassword"></v-text-field>
+                <v-text-field v-model="editedItem.name" :rules="[rules.required]" label="Role name"></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
@@ -38,17 +26,15 @@
 
     <v-data-table :headers="headers" :items="items" :pagination.sync="pagination" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.first }}</td>
-        <td>{{ props.item.last }}</td>
-        <td>{{ props.item.email }}</td>
-        <td>{{ props.item.phone }}</td>
+        <td>{{ props.item.id }}</td>
+        <td>{{ props.item.name }}</td>
         <td>{{ formatDate(props.item.createdAt) }}</td>
         <td>{{ formatDate(props.item.updatedAt) }}</td>
         <td class="justify-center layout pt-2">
-          <v-icon small class="mr-2" @click="editItem(props.item)" v-if="user.id !== props.item.id">
+          <v-icon small class="mr-2" @click="editItem(props.item)">
             edit
           </v-icon>
-          <v-icon small @click="deleteItem(props.item)" v-if="user.id !== props.item.id">
+          <v-icon small @click="deleteItem(props.item)">
             delete
           </v-icon>
         </td>
@@ -72,7 +58,7 @@ import Snack from '@/components/Snack';
 import store from '@/store/index'
 
 export default {
-  name: 'Users',
+  name: 'Roles',
   store,
   components: {
     Snack
@@ -85,47 +71,26 @@ export default {
       alertMessage: '',
       showPassword: false,
       rules: {
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 8 || 'Min 8 characters'
+        required: value => !!value || 'Required.'
       },
       defaultItem: {
-        first: '',
-        last: '',
-        email: '',
-        phone: '',
-        password: ''
+        name: ''
       },
       editedItem: {
-        first: '',
-        last: '',
-        email: '',
-        phone: '',
-        password: ''
+        name: ''
       },
       headers: [
         {
-          text: 'First',
-          value: 'first',
+          text: 'ID',
+          value: 'id',
           align: 'left',
           sortable: true
         },
         {
-          text: 'Last',
-          value: 'last',
+          text: 'Name',
+          value: 'name',
           align: 'left',
           sortable: true
-        },
-        {
-          text: 'E-mail',
-          value: 'email',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Phone',
-          value: 'phone',
-          align: 'left',
-          sortable: false
         },
         {
           text: 'Created',
@@ -153,14 +118,14 @@ export default {
     apiError () {
       this.alertMessage = this.apiError ? this.apiError.data.error : ''
     },
-    users () {
-      this.items = this.users
+    roles () {
+      this.items = this.roles
     },
     dialog (val) {
       val || this.close()
     },
-    newUser () {
-      store.dispatch('users')
+    newRole () {
+      store.dispatch('roles')
       this.close()
     }
   },
@@ -168,11 +133,11 @@ export default {
     apiError () {
       return store.getters.apiError
     },
-    newUser () {
-      return store.getters.newUser
+    newRole () {
+      return store.getters.newRole
     },
-    users () {
-      return store.getters.users
+    roles () {
+      return store.getters.roles
     },
     pages () {
       if (!this.pagination.rowsPerPage || !this.items.length) {
@@ -183,13 +148,10 @@ export default {
       }
     },
     formTitle () {
-      return this.editedIndex === -1 ? 'Add User' : 'Edit User'
+      return this.editedIndex === -1 ? 'Add Role' : 'Edit Role'
     },
     isEditing () {
       return this.editedIndex !== -1
-    },
-    user() {
-      return store.getters.user
     }
   },
   methods: {
@@ -198,7 +160,7 @@ export default {
     },
     close () {
       this.dialog = false
-      store.dispatch('users')
+      store.dispatch('roles')
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
@@ -206,25 +168,25 @@ export default {
     },
     editItem (item) {
       this.editedIndex = this.items.indexOf(item)
-      this.editedItem = Object.assign({ password: '' }, item)
+      this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
     deleteItem (item) {
-      confirm('Are you sure you want to delete this user?') && store.dispatch('deleteUser', { user: item })
+      confirm('Are you sure you want to delete this role?') && store.dispatch('deleteRole', { role: item })
     },
     save () {
-      store.dispatch('saveUser', { user: this.editedItem, isNew: this.editedIndex === -1 })
+      store.dispatch('saveRole', { role: this.editedItem, isNew: this.editedIndex === -1 })
     }
   },
   created () {
-    store.dispatch('users')
-    store.dispatch('setAppTitle', 'Users')
+    store.dispatch('roles')
+    store.dispatch('setAppTitle', 'Roles')
   }
 }
 </script>
 
 <style scoped>
-.add-user {
+.add-role {
   margin-bottom: 20px;
 }
 </style>

@@ -7,6 +7,7 @@ const state = {
   apiError: null,
   roles: [],
   users: [],
-  newUser: {}
+  newUser: {},
+  newRole: {}
 }
 export default state

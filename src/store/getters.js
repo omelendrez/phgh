@@ -5,7 +5,9 @@ const getters = {
   user: state => state.user,
   apiError: state => state.apiError,
   users: state => state.users,
-  newUser: state => state.newUser
+  newUser: state => state.newUser,
+  roles: state => state.roles,
+  newRole: state => state.newRole
 }
 
 export default getters

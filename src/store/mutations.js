@@ -33,7 +33,12 @@ const mutations = {
   delete_user_success (state, user) {
     state.status = 'success'
     state.newUser = user
-  }
+  },
+  roles_success (state, roles) {
+    state.status = 'success'
+    state.roles = roles
+  },
+
 }
 
 export default mutations
