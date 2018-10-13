@@ -1,14 +1,12 @@
 <template>
   <v-container fluid>
+
     <v-dialog v-model="dialog" max-width="500px">
-      <v-btn slot="activator" color="blue-grey white--text">Add user</v-btn>
-
+      <v-btn slot="activator" small color="blue-grey white--text" class="add-user">Add user</v-btn>
       <v-card>
-
         <v-card-title>
           <span class="headline">{{ formTitle }}</span>
         </v-card-title>
-
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
@@ -18,22 +16,23 @@
               <v-flex xs12 sm12 md12>
                 <v-text-field v-model="editedItem.last" label="Last name"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm12 md12 v-if="!isEditing">
+              <v-flex xs12 sm12 md12>
                 <v-text-field v-model="editedItem.email" label="email"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm12 md12 v-if="!isEditing">
+              <v-flex xs12 sm12 md12>
                 <v-text-field v-model="editedItem.phone" label="phone"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm12 md12>
+                <v-text-field v-model="editedItem.password" label="password"></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
-
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
           <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
         </v-card-actions>
-
       </v-card>
     </v-dialog>
 
@@ -88,13 +87,15 @@ export default {
         first: '',
         last: '',
         email: '',
-        phone: ''
+        phone: '',
+        password: ''
       },
       editedItem: {
         first: '',
         last: '',
         email: '',
-        phone: ''
+        phone: '',
+        password: ''
       },
       headers: [
         {
@@ -218,5 +219,7 @@ export default {
 </script>
 
 <style scoped>
-
+.add-user {
+  margin-bottom: 20px;
+}
 </style>
