@@ -79,6 +79,7 @@
     </v-footer>
     <Snack v-bind:message="alertMessage" />
     <Dialog v-bind:confirm="confirmData" />
+    <Loading />
   </v-app>
 </template>
 
@@ -86,13 +87,15 @@
 import store from '@/store/index'
 import Snack from '@/components/Snack'
 import Dialog from '@/components/Dialog'
+import Loading from '@/components/Loading'
 
 export default {
   name: 'app',
   store,
   components: {
     Snack,
-    Dialog
+    Dialog,
+    Loading
   },
   data () {
     return {
