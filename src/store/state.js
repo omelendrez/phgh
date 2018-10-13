@@ -5,6 +5,7 @@ const state = {
   user: { first: '', last: '' },
   status: '',
   apiError: null,
+  apiMessage: null,
   roles: [],
   users: [],
   newUser: {},

@@ -19,7 +19,7 @@
 
           <v-list-group sub-group no-action>
             <v-list-tile slot="activator">
-              <v-list-tile-title>Access</v-list-tile-title>
+              <v-list-tile-title>Permissions</v-list-tile-title>
             </v-list-tile>
             <v-list-tile v-for="(admin, i) in admins" :key="i" @click="admin[2]">
               <v-list-tile-title v-text="admin[0]"></v-list-tile-title>

@@ -26,7 +26,6 @@
 
     <v-data-table :headers="headers" :items="items" :pagination.sync="pagination" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.id }}</td>
         <td>{{ props.item.name }}</td>
         <td>{{ formatDate(props.item.createdAt) }}</td>
         <td>{{ formatDate(props.item.updatedAt) }}</td>
@@ -81,12 +80,6 @@ export default {
       },
       headers: [
         {
-          text: 'ID',
-          value: 'id',
-          align: 'left',
-          sortable: true
-        },
-        {
           text: 'Name',
           value: 'name',
           align: 'left',
@@ -115,6 +108,9 @@ export default {
     }
   },
   watch: {
+    apiMessage() {
+      this.alertMessage = this.apiMessage
+    },
     apiError () {
       this.alertMessage = this.apiError ? this.apiError.data.error : ''
     },
@@ -130,6 +126,9 @@ export default {
     }
   },
   computed: {
+    apiMessage() {
+      return store.getters.apiMessage
+    },
     apiError () {
       return store.getters.apiError
     },

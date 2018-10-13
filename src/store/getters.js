@@ -4,6 +4,7 @@ const getters = {
   appTitle: state => state.appTitle,
   user: state => state.user,
   apiError: state => state.apiError,
+  apiMessage: state => state.apiMessage,
   users: state => state.users,
   newUser: state => state.newUser,
   roles: state => state.roles,

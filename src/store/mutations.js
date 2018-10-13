@@ -26,19 +26,30 @@ const mutations = {
     state.status = 'success'
     state.users = users
   },
-  save_user_success (state, user) {
+  save_user_success (state, { user, message }) {
     state.status = 'success'
     state.newUser = user
+    state.apiMessage = message
   },
-  delete_user_success (state, user) {
+  delete_user_success (state, { user, message }) {
     state.status = 'success'
     state.newUser = user
+    state.apiMessage = message
   },
   roles_success (state, roles) {
     state.status = 'success'
     state.roles = roles
   },
-
+  save_role_success (state, { role, message }) {
+    state.status = 'success'
+    state.newRole = role
+    state.apiMessage = message
+  },
+  delete_role_success (state, { role, message }) {
+    state.status = 'success'
+    state.newRole = role
+    state.apiMessage = message
+  }
 }
 
 export default mutations

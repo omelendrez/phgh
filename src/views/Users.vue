@@ -150,6 +150,9 @@ export default {
     }
   },
   watch: {
+    apiMessage() {
+      this.alertMessage = this.apiMessage
+    },
     apiError () {
       this.alertMessage = this.apiError ? this.apiError.data.error : ''
     },
@@ -165,6 +168,9 @@ export default {
     }
   },
   computed: {
+    apiMessage() {
+      return store.getters.apiMessage
+    },
     apiError () {
       return store.getters.apiError
     },
