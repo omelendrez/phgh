@@ -159,6 +159,18 @@ const actions = {
   },
   getConfirm ({ commit }, { confirm }) {
     commit('confirm', confirm)
+  },
+  saveUserRole ({ commit }, { userRoles }) {
+    return new Promise((resolve, reject) => {
+      axios({ url: API + 'userroles', data: userRoles, method: 'POST' })
+        .then(resp => {
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('request_error', handleError(err))
+          reject(err)
+        })
+    })
   }
 }
 

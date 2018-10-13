@@ -10,6 +10,16 @@
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
+              <v-flex xs12 v-if="this.editedIndex !== -1">
+                <v-combobox v-model="editedItem.roles" :items="roleItems" label="Roles" multiple chips>
+                  <template slot="selection" slot-scope="data">
+                    <v-chip :selected="data.selected" :disabled="data.disabled" :key="data.item" class="v-chip--select-multi" @input="data.parent.selectItem(data.item)">
+                      <v-avatar class="accent white--text" v-text="data.item.slice(0, 1).toUpperCase()"></v-avatar>
+                      {{ data.item }}
+                    </v-chip>
+                  </template>
+                </v-combobox>
+              </v-flex>
               <v-flex xs12 sm12 md12>
                 <v-text-field v-model="editedItem.first" :rules="[rules.required]" label="First name"></v-text-field>
               </v-flex>
@@ -35,7 +45,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
     <v-data-table :headers="headers" :items="items" :pagination.sync="pagination" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
         <td>{{ props.item.first }}</td>
@@ -57,7 +66,6 @@
     <div class="text-xs-center pt-2">
       <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
     </div>
-
   </v-container>
 </template>
 
@@ -74,6 +82,7 @@ export default {
       pagination: {},
       editedIndex: -1,
       showPassword: false,
+      roleItems: [],
       rules: {
         required: value => !!value || 'Required.',
         min: v => v.length >= 8 || 'Min 8 characters'
@@ -83,14 +92,16 @@ export default {
         last: '',
         email: '',
         phone: '',
-        password: ''
+        password: '',
+        roles: []
       },
       editedItem: {
         first: '',
         last: '',
         email: '',
         phone: '',
-        password: ''
+        password: '',
+        roles: []
       },
       headers: [
         {
@@ -143,6 +154,11 @@ export default {
     users () {
       this.items = this.users
     },
+    roles () {
+      const roleItems = []
+      this.roles.map(item => roleItems.push(item.name))
+      this.roleItems = roleItems
+    },
     dialog (val) {
       val || this.close()
     },
@@ -157,6 +173,9 @@ export default {
     },
     users () {
       return store.getters.users
+    },
+    roles () {
+      return store.getters.roles
     },
     pages () {
       if (!this.pagination.rowsPerPage || !this.items.length) {
@@ -190,7 +209,16 @@ export default {
     },
     editItem (item) {
       this.editedIndex = this.items.indexOf(item)
-      this.editedItem = Object.assign({ password: '' }, item)
+      this.editedItem = Object.assign({ password: '', roles: [] }, item)
+      if (item.UserRoles) {
+        this.roles.map(role => {
+          item.UserRoles.map(item => {
+            if (item.RoleId === role.id) {
+              this.editedItem.roles.push(role.name)
+            }
+          })
+        })
+      }
       this.dialog = true
     },
     deleteItem (item) {
@@ -205,11 +233,22 @@ export default {
       store.dispatch('getConfirm', confirm)
     },
     save () {
-      store.dispatch('saveUser', { user: this.editedItem, isNew: this.editedIndex === -1 })
+      const user = this.editedItem
+      store.dispatch('saveUser', { user: user, isNew: this.editedIndex === -1 })
+      if (user.roles.length) {
+        const userId = user.id
+        const list = []
+        user.roles.map(role => {
+          const userRole = { UserId: user.id, RoleId: this.roles.find(item => item.name === role).id }
+          list.push(userRole)
+        })
+        store.dispatch('saveUserRole', { userRoles: list })
+      }
     }
   },
   created () {
     store.dispatch('users')
+    store.dispatch('roles')
     store.dispatch('setAppTitle', 'Users')
   }
 }
