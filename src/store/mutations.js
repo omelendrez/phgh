@@ -26,7 +26,11 @@ const mutations = {
     state.status = 'success'
     state.users = users
   },
-  add_user_success (state, user) {
+  save_user_success (state, user) {
+    state.status = 'success'
+    state.newUser = user
+  },
+  delete_user_success (state, user) {
     state.status = 'success'
     state.newUser = user
   }

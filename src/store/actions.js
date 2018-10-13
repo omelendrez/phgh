@@ -56,17 +56,36 @@ const actions = {
         })
     })
   },
-  addUser ({ commit }, { user, isNew }) {
+  saveUser ({ commit }, { user, isNew }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
-      if (isNew) {
+      if (isNew && !user.password) {
         user.password = defaultPassword
       }
       axios({ url: API + 'users', data: user, method: isNew ? 'POST' : 'PUT' })
         .then(resp => {
           if (resp.data.success) {
             const user = resp.data.user
-            commit('add_user_success', user)
+            commit('save_user_success', user)
+          } else {
+            commit('request_error', resp)
+          }
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('request_error', handleError(err))
+          reject(err)
+        })
+    })
+  },
+  deleteUser ({ commit }, { user }) {
+    return new Promise((resolve, reject) => {
+      commit('start_request')
+      axios({ url: API + 'users', data: user, method: 'DELETE' })
+        .then(resp => {
+          if (resp.data.success) {
+            const user = resp.data.user
+            commit('delete_user_success', user)
           } else {
             commit('request_error', resp)
           }
@@ -78,6 +97,7 @@ const actions = {
         })
     })
   }
+
 }
 
 export default actions
