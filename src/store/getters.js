@@ -1,4 +1,5 @@
 const getters = {
+  status: state => state.status,
   isAuthenticated: state => state.authenticated,
   authStatus: state => state.status,
   appTitle: state => state.appTitle,
