@@ -53,9 +53,6 @@
           </v-icon>
         </td>
       </template>
-      <template slot="no-data">
-        <v-icon color="error">cancel</v-icon> Sorry, nothing to display here
-      </template>
     </v-data-table>
     <div class="text-xs-center pt-2">
       <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
