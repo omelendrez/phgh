@@ -52,7 +52,7 @@
 
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar color="blue-grey" app dense dark >
+    <v-toolbar color="blue-grey" app dense dark>
       <v-toolbar-side-icon @click.stop="showDrawer = !showDrawer" v-if="isAuthenticated"></v-toolbar-side-icon>
       <v-toolbar-title>{{appTitle}}</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -63,11 +63,11 @@
         </v-icon>
       </v-badge>
 
-      <span class="user-name">{{userName}}</span>
-
       <v-icon>
         person
       </v-icon>
+
+      <span class="user-name">{{userName}}</span>
 
     </v-toolbar>
     <v-content>
@@ -123,9 +123,10 @@ export default {
       ],
       configs: [
         ['Main config', 'build', this.mainConfig],
+        ['Finance Config', 'attach_money', this.financeConfig],
         ['PH Config', 'trending_up', this.PHConfig],
         ['GH Config', 'trending_down', this.GHConfig],
-        ['TimeConfig', 'alarm', this.timeConfig]
+        ['Time Config', 'alarm', this.timeConfig]
       ]
     }
   },
@@ -189,6 +190,10 @@ export default {
       this.showDrawer = false
       this.$router.push({ name: 'PHConfig' })
     },
+    financeConfig () {
+      this.showDrawer = false
+      this.$router.push({ name: 'financeConfig' })
+    },
     GHConfig () {
       this.showDrawer = false
       this.$router.push({ name: 'GHConfig' })
@@ -212,7 +217,7 @@ export default {
 </script>
 
 <style>
-.user-name {
-  margin-right: 14px;
+body {
+  font-family: Roboto;
 }
 </style>

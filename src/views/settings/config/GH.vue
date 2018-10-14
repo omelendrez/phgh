@@ -1,12 +1,18 @@
 <template>
-  <div>GH Config</div>
+  <v-container>
+    <v-card>
+      <v-container>
+        Under construction
+      </v-container>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
 import store from '@/store/index'
 
 export default {
-  name: 'Main',
+  name: 'GH',
   store,
   data: () => ({}),
   created () {
@@ -17,6 +23,5 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
 

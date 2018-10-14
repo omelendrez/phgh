@@ -35,6 +35,11 @@ const routes = [
     component: 'settings/config/Main'
   },
   {
+    path: '/settings/config/finance',
+    name: 'financeConfig',
+    component: 'settings/config/Finance'
+  },
+  {
     path: '/settings/config/ph',
     name: 'PHConfig',
     component: 'settings/config/PH'

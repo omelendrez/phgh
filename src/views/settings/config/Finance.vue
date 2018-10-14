@@ -12,11 +12,11 @@
 import store from '@/store/index'
 
 export default {
-  name: 'PH',
+  name: 'Finance',
   store,
   data: () => ({}),
   created () {
-    store.dispatch('setAppTitle', 'PH Config')
+    store.dispatch('setAppTitle', 'Finance Config')
   }
 }
 
