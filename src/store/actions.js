@@ -63,7 +63,8 @@ const actions = {
       if (isNew && !user.password) {
         user.password = defaultPassword
       }
-      axios({ url: API + 'users', data: user, method: isNew ? 'POST' : 'PUT' })
+      const url = `${API}users${!isNew ? '/' + user.id : ''}`
+      axios({ url: url, data: user, method: isNew ? 'POST' : 'PUT' })
         .then(resp => {
           if (resp.data.success) {
             const user = resp.data.user
@@ -83,7 +84,7 @@ const actions = {
   deleteUser ({ commit }, { user }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
-      axios({ url: API + 'users', data: user, method: 'DELETE' })
+      axios({ url: API + 'users/' + user.id, method: 'DELETE' })
         .then(resp => {
           if (resp.data.success) {
             const user = resp.data.user
@@ -120,7 +121,8 @@ const actions = {
   saveRole ({ commit }, { role, isNew }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
-      axios({ url: API + 'roles', data: role, method: isNew ? 'POST' : 'PUT' })
+      const url = `${API}roles${!isNew ? '/' + role.id : ''}`
+      axios({ url: url, data: role, method: isNew ? 'POST' : 'PUT' })
         .then(resp => {
           if (resp.data.success) {
             const role = resp.data.role
@@ -140,7 +142,7 @@ const actions = {
   deleteRole ({ commit }, { role }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
-      axios({ url: API + 'roles', data: role, method: 'DELETE' })
+      axios({ url: API + 'roles/' + role.id, method: 'DELETE' })
         .then(resp => {
           if (resp.data.success) {
             const role = resp.data.role
