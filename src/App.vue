@@ -19,12 +19,24 @@
 
           <v-list-group sub-group no-action>
             <v-list-tile slot="activator">
+              <v-list-tile-title>Config</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile v-for="(config, i) in configs" :key="i" @click="config[2]">
+              <v-list-tile-title v-text="config[0]"></v-list-tile-title>
+              <v-list-tile-action>
+                <v-icon v-text="config[1]"></v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list-group>
+
+          <v-list-group sub-group no-action>
+            <v-list-tile slot="activator">
               <v-list-tile-title>Permissions</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile v-for="(admin, i) in admins" :key="i" @click="admin[2]">
-              <v-list-tile-title v-text="admin[0]"></v-list-tile-title>
+            <v-list-tile v-for="(permission, i) in permissions" :key="i" @click="permission[2]">
+              <v-list-tile-title v-text="permission[0]"></v-list-tile-title>
               <v-list-tile-action>
-                <v-icon v-text="admin[1]"></v-icon>
+                <v-icon v-text="permission[1]"></v-icon>
               </v-list-tile-action>
             </v-list-tile>
           </v-list-group>
@@ -105,10 +117,16 @@ export default {
       showAlert: false,
       alertMessage: null,
       confirmData: null,
-      admins: [
+      permissions: [
         ['Users', 'person', this.users],
         ['Roles', 'supervisor_account', this.roles]
       ],
+      configs: [
+        ['Main config', 'build', this.mainConfig],
+        ['PH Config', 'trending_up', this.PHConfig],
+        ['GH Config', 'trending_down', this.GHConfig],
+        ['TimeConfig', 'alarm', this.timeConfig]
+      ]
     }
   },
   watch: {
@@ -152,10 +170,6 @@ export default {
       this.showDrawer = false
       this.$router.push({ name: 'dashboard' })
     },
-    logout () {
-      this.showDrawer = false
-      store.dispatch('logout')
-    },
     showAlerts () {
       console.log('this show go show the list of alerts')
     },
@@ -166,6 +180,26 @@ export default {
     roles () {
       this.showDrawer = false
       this.$router.push({ name: 'roles' })
+    },
+    mainConfig () {
+      this.showDrawer = false
+      this.$router.push({ name: 'mainConfig' })
+    },
+    PHConfig () {
+      this.showDrawer = false
+      this.$router.push({ name: 'PHConfig' })
+    },
+    GHConfig () {
+      this.showDrawer = false
+      this.$router.push({ name: 'GHConfig' })
+    },
+    timeConfig () {
+      this.showDrawer = false
+      this.$router.push({ name: 'timeConfig' })
+    },
+    logout () {
+      this.showDrawer = false
+      store.dispatch('logout')
     }
   },
   created () {
