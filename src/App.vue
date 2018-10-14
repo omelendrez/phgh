@@ -40,7 +40,7 @@
 
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar color="blue-grey" dark>
+    <v-toolbar color="blue-grey" app dense dark >
       <v-toolbar-side-icon @click.stop="showDrawer = !showDrawer" v-if="isAuthenticated"></v-toolbar-side-icon>
       <v-toolbar-title>{{appTitle}}</v-toolbar-title>
       <v-spacer></v-spacer>
