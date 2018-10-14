@@ -3,40 +3,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-const routerOptions = [
-  {
-    path: '/',
-    name: 'landing',
-    component: 'Landing'
-  },
-  {
-    path: '/signin',
-    name: 'signin',
-    component: 'Signin'
-  },
-  {
-    path: '/forgot-password',
-    name: 'ForgotPassword',
-    component: 'ForgotPassword'
-  },
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: 'Dashboard'
-  },
-  {
-    path: '/users',
-    name: 'users',
-    component: 'Users'
-  },
-  {
-    path: '/roles',
-    name: 'roles',
-    component: 'Roles'
-  }
-]
+import routesList from './routes'
 
-const routes = routerOptions.map(route => {
+const routes = routesList.map(route => {
   return {
     ...route,
     component: () => import(`@/views/${route.component}.vue`)
