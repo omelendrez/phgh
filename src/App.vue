@@ -171,7 +171,7 @@ export default {
       this.$router.push({ name: 'dashboard' })
     },
     showAlerts () {
-      console.log('this show go show the list of alerts')
+      console.log('this show go show the list of alerts')  // eslint-disable-line no-console
     },
     users () {
       this.showDrawer = false
