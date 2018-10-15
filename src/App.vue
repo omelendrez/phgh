@@ -125,8 +125,7 @@ export default {
         ['Main config', 'build', this.mainConfig],
         ['Finance Config', 'attach_money', this.financeConfig],
         ['PH Config', 'trending_up', this.PHConfig],
-        ['GH Config', 'trending_down', this.GHConfig],
-        ['Time Config', 'alarm', this.timeConfig]
+        ['GH Config', 'trending_down', this.GHConfig]
       ]
     }
   },
@@ -197,10 +196,6 @@ export default {
     GHConfig () {
       this.showDrawer = false
       this.$router.push({ name: 'GHConfig' })
-    },
-    timeConfig () {
-      this.showDrawer = false
-      this.$router.push({ name: 'timeConfig' })
     },
     logout () {
       this.showDrawer = false

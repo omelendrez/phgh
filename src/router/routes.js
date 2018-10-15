@@ -48,11 +48,6 @@ const routes = [
     path: '/settings/config/gh',
     name: 'GHConfig',
     component: 'settings/config/GH'
-  },
-  {
-    path: '/settings/config/time',
-    name: 'timeConfig',
-    component: 'settings/config/Time'
   }
 ]
 
