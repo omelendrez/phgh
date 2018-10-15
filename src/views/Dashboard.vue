@@ -20,7 +20,7 @@ export default {
       { title: 'Amount in the system', value: 'NGN 3,456,789', color: '#344955', flex: 3 },
       { title: 'Bitcoins', value: 'NGN 456,789', color: '#4a6572', flex: 3 },
       { title: 'Transactions', value: '932', color: '#356859', flex: 3 },
-      { title: 'Blocked customers', value: '83', color: '#344955', flex: 3 }
+      { title: 'Blocked participants', value: '83', color: '#344955', flex: 3 }
     ]
   }),
   created () {

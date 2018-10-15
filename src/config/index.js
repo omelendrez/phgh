@@ -109,13 +109,6 @@ const config = {
       type: 'text',
       fieldType: 'text',
       value: 'You have an order please make payment'
-    },
-    {
-      title: 'Message to GH',
-      subtitle: 'Text to be sent to the GH payment by PH is done.',
-      type: 'text',
-      fieldType: 'text',
-      value: 'You have a paid order please confirm'
     }
   ],
   gh: [
@@ -153,7 +146,14 @@ const config = {
       suffix: 'days',
       fieldType: 'number',
       min: 0,
-      value: 21
+      value: 30
+    },
+    {
+      title: 'Message to GH',
+      subtitle: 'Text to be sent to the GH payment by PH is done.',
+      type: 'text',
+      fieldType: 'text',
+      value: 'You have a paid order please confirm'
     }
   ],
   finance: [
@@ -199,7 +199,7 @@ const config = {
       suffix: '%',
       fieldType: 'number',
       min: 0,
-      value: 2
+      value: 1.5
     },
     {
       title: 'Next levels referral bonus',

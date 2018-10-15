@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App.vue'
 import router from '@/router'
@@ -7,6 +8,7 @@ import Vuetify from 'vuetify'
 import VueChartkick from 'vue-chartkick'
 // import firebase from 'firebase'
 import './registerServiceWorker'
+
 
 Vue.use(Vuetify)
 Vue.use(VueChartkick)
