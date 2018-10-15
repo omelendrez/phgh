@@ -52,14 +52,13 @@ export default {
           value: true
         },
         {
-          title: 'Daily Grow',
-          subtitle: 'Set percent of daily growth.',
+          title: 'Blocked users tickets',
+          subtitle: 'Limit of days a blocked user should be ticketed.',
           type: 'text',
-          suffix: '%',
+          suffix: 'Days',
           fieldType: 'number',
-          mask: '##',
           min: 1,
-          value: 1
+          value: 4
         }
       ]
     }
