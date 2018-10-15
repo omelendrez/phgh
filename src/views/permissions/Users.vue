@@ -27,7 +27,7 @@
                 <v-text-field v-model="editedItem.last" :rules="[rules.required]" label="Last name"></v-text-field>
               </v-flex>
               <v-flex xs12 sm12 md12>
-                <v-text-field v-model="editedItem.email" :rules="[rules.required]" label="E-mail"></v-text-field>
+                <v-text-field v-model="editedItem.email" :rules="[rules.required, rules.validEmail]" label="E-mail"></v-text-field>
               </v-flex>
               <v-flex xs12 sm12 md12>
                 <v-text-field v-model="editedItem.phone" mask="phone" :rules="[rules.required]" label="Phone"></v-text-field>
@@ -72,6 +72,7 @@
 <script>
 import moment from 'moment'
 import store from '@/store'
+import { rules } from '@/utils'
 
 export default {
   name: 'Users',
@@ -83,10 +84,7 @@ export default {
       editedIndex: -1,
       showPassword: false,
       roleItems: [],
-      rules: {
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 6 || 'Min 6 characters'
-      },
+      rules: {},
       defaultItem: {
         first: '',
         last: '',
@@ -218,7 +216,6 @@ export default {
     },
     close () {
       this.dialog = false
-      store.dispatch('users')
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
@@ -257,6 +254,7 @@ export default {
     store.dispatch('users')
     store.dispatch('roles')
     store.dispatch('setAppTitle', 'Users')
+    this.rules = rules
   }
 }
 </script>

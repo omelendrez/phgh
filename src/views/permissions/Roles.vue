@@ -137,7 +137,6 @@ export default {
     },
     close () {
       this.dialog = false
-      store.dispatch('roles')
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
