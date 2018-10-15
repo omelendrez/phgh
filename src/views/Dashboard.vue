@@ -1,36 +1,16 @@
 <template>
-  <v-container>
-    <v-layout justify-center>
-      <v-flex xs12 sm6>
-        <v-card flat>
-          <v-container fluid grid-list-md>
-            <v-layout row wrap>
-              <v-flex v-for="card in cards" v-bind="{ [`xl${card.flex}`]: true }" :key="card.title">
-                <v-card :color="card.color" class="white--text">
-                  <v-card-title>
-                    {{card.title}}
-                  </v-card-title>
-                  <v-card-text class="text-xs-center">
-                    <h2>{{card.value}}</h2>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-btn flat color="#f9aa33">See details</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <Dash :items="cards" />
 </template>
 
 <script>
 import store from '@/store/index'
+import Dash from '@/components/Dash'
 
 export default {
   name: 'Dashboard',
+  components: {
+    Dash
+  },
   store,
   data: () => ({
     cards: [
@@ -51,6 +31,5 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
 

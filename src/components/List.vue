@@ -22,13 +22,16 @@
 export default {
   name: 'List',
   props: ['items'],
+  data: () => ({
+    itemsList: []
+  }),
   watch: {
     items () {
       this.itemsList = this.items
     }
   },
-  data: () => ({
-    itemsList: []
-  })
+  created () {
+    this.itemsList = this.items
+  }
 }
 </script>
