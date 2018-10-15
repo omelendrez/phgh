@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import store from '@/store/index'
+import store from '@/store'
 import Snack from '@/components/Snack'
 import Dialog from '@/components/Dialog'
 import Loading from '@/components/Loading'
