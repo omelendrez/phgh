@@ -61,12 +61,11 @@ export default {
         this.alertMessage = errors[0]
         return
       }
-      console.log('entro!')
       let email = this.email
       let password = this.password
       store.dispatch('login', { email, password })
         .then(() => this.$router.push({ name: 'dashboard' }))
-        .catch(err => console.log(err))
+        .catch(err => console.log(err))  // eslint-disable-line no-console
     },
     reset () {
       this.$router.push({ name: 'ForgotPassword' })
