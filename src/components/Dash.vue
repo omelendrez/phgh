@@ -1,6 +1,6 @@
 <template>
   <v-layout justify-center>
-    <v-flex xs12 sm6>
+    <v-flex xs12 xl12 sm12>
       <v-card flat>
         <v-container grid-list-md>
           <v-layout row wrap>
@@ -16,6 +16,9 @@
                   <v-btn flat color="#f9aa33" @click="showAlert">See details</v-btn>
                 </v-card-actions>
               </v-card>
+            </v-flex>
+            <v-flex xs12>
+              <pie-chart :donut="true" :data="chartData"></pie-chart>
             </v-flex>
           </v-layout>
         </v-container>
@@ -38,7 +41,11 @@ export default {
     cardsList: [],
     title: '',
     message: '',
-    alerted: false
+    alerted: false,
+    chartData: [
+      ['NGN', 3456789],
+      ['Bitcoin', 456789]
+    ]
   }),
   watch: {
     items () {
