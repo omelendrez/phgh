@@ -1,7 +1,7 @@
 <template>
   <v-container class="signin">
     <v-form v-model="valid" ref="form">
-      <v-text-field v-model="email" label="E-mail"  :rules="[rules.required]"></v-text-field>
+      <v-text-field v-model="email" label="E-mail" :rules="[rules.required, rules.validEmail]"></v-text-field>
       <v-text-field v-model="password" :append-icon="showPassword ? 'visibility_off' : 'visibility'" :rules="[rules.required, rules.min]" :type="showPassword ? 'text' : 'password'" label="Password" hint="At least 8 characters" counter @click:append="showPassword = !showPassword"></v-text-field>
       <v-btn block color="primary" :disabled="activeSubmit" @click="submit">Sign In</v-btn>
       <v-alert v-model="apiErrorAlert" type="error">
@@ -16,7 +16,8 @@
 
 <script>
 import Snack from '@/components/Snack';
-import store from '@/store/index'
+import store from '@/store'
+import { rules } from '@/utils'
 
 export default {
   name: 'Signin',
@@ -34,10 +35,7 @@ export default {
     email: '',
     password: '',
     showPassword: false,
-    rules: {
-      required: value => !!value || 'Required.',
-      min: v => v.length >= 6 || 'Min 6 characters'
-    }
+    rules: {}
   }),
   watch: {
     apiError () {
@@ -63,6 +61,7 @@ export default {
         this.alertMessage = errors[0]
         return
       }
+      console.log('entro!')
       let email = this.email
       let password = this.password
       store.dispatch('login', { email, password })
@@ -75,6 +74,7 @@ export default {
   },
   created () {
     store.dispatch('setAppTitle', 'Sign In')
+    this.rules = rules
   }
 }
 </script>

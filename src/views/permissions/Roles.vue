@@ -48,7 +48,7 @@
 
 <script>
 import moment from 'moment'
-import store from '@/store/index'
+import store from '@/store'
 
 export default {
   name: 'Roles',

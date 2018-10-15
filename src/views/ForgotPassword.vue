@@ -1,22 +1,22 @@
 <template>
   <v-container class="forgot-password">
-    <span class="headline">
-      Reset your password
-    </span>
     <v-form v-model="valid" ref="form">
-      <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+      <v-text-field v-model="email" label="E-mail" :rules="[rules.required, rules.validEmail]"></v-text-field>
       <v-btn block color="primary" :disabled="activeSubmit" @click="submit">RESET PASSWORD</v-btn>
-      <v-btn small class="back" color="default" @click="back">Back to Signin</v-btn>
+      <v-btn small class="back" flat color="red" @click="back">Back to Signin</v-btn>
     </v-form>
-    <Snack v-bind:message="alertMessage"/>
+    <Snack v-bind:message="alertMessage" />
   </v-container>
 </template>
 
 <script>
 import Snack from './../components/Snack';
+import store from '@/store'
+import { rules } from '@/utils'
 
 export default {
   name: 'ForgotPassword',
+  store,
   components: {
     Snack
   },
@@ -25,14 +25,11 @@ export default {
     activeSubmit: false,
     alertMessage: '',
     email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+/.test(v) || 'E-mail must be valid'
-    ]
+    rules: {}
   }),
   methods: {
     submit () {
-      if(!this.valid) {
+      if (!this.valid) {
         const errors = []
         this.$refs.form.inputs.map(input => {
           input.errorBucket.map(error => {
@@ -43,11 +40,15 @@ export default {
         return
       }
       this.activeSubmit = true
-      this.$router.push({ name: 'signin' })
+      this.back()
     },
-    back() {
+    back () {
       this.$router.push({ name: 'signin' })
     }
+  },
+  created () {
+    store.dispatch('setAppTitle', 'Forgot password')
+    this.rules = rules
   }
 }
 </script>
@@ -59,6 +60,7 @@ export default {
   max-width: 500px;
 }
 .back {
+  text-transform: capitalize;
   margin-top: 60px;
 }
 </style>

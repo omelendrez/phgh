@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import store from '@/store/index'
+import store from '@/store'
 import List from '@/components/List'
 import config from '@/config'
 
