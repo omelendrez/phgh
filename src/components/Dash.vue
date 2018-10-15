@@ -37,7 +37,8 @@ export default {
   data: () => ({
     cardsList: [],
     title: '',
-    message: ''
+    message: '',
+    alerted: false
   }),
   watch: {
     items () {
@@ -46,8 +47,11 @@ export default {
   },
   methods: {
     showAlert () {
-      this.title = 'To be implemented'
-      this.message = 'Dashboard details are not yet implemented but it will be available soon'
+      if (!this.alerted) {
+        this.title = 'To be implemented'
+        this.message = 'Dashboard details are not yet implemented but it will be available soon. Each option will take you to a different view containing the most relevant details of each feature'
+        this.alerted = true
+      }
     },
     hideAlert () {
       this.title = ''
