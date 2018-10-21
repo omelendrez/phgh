@@ -8,10 +8,10 @@ const handleError = err => {
 }
 
 const actions = {
-  setAppTitle ({ commit }, payload) {
+  setAppTitle({ commit }, payload) {
     commit('setAppTitle', payload)
   },
-  login ({ commit }, user) {
+  login({ commit }, user) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'users/login', data: user, method: 'POST' })
@@ -32,7 +32,7 @@ const actions = {
         })
     })
   },
-  logout ({ commit }) {
+  logout({ commit }) {
     return new Promise((resolve) => {
       commit('logout')
       localStorage.removeItem('token')
@@ -40,7 +40,7 @@ const actions = {
       resolve()
     })
   },
-  users ({ commit }) {
+  users({ commit }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'users', method: 'GET' })
@@ -57,7 +57,7 @@ const actions = {
         })
     })
   },
-  saveUser ({ commit }, { user, isNew }) {
+  saveUser({ commit }, { user, isNew }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       if (isNew && !user.password) {
@@ -81,7 +81,7 @@ const actions = {
         })
     })
   },
-  deleteUser ({ commit }, { user }) {
+  deleteUser({ commit }, { user }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'users/' + user.id, method: 'DELETE' })
@@ -101,7 +101,7 @@ const actions = {
         })
     })
   },
-  roles ({ commit }) {
+  roles({ commit }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'roles', method: 'GET' })
@@ -118,7 +118,7 @@ const actions = {
         })
     })
   },
-  saveRole ({ commit }, { role, isNew }) {
+  saveRole({ commit }, { role, isNew }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       const url = `${API}roles${!isNew ? '/' + role.id : ''}`
@@ -139,7 +139,7 @@ const actions = {
         })
     })
   },
-  deleteRole ({ commit }, { role }) {
+  deleteRole({ commit }, { role }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'roles/' + role.id, method: 'DELETE' })
@@ -159,10 +159,10 @@ const actions = {
         })
     })
   },
-  getConfirm ({ commit }, { confirm }) {
+  getConfirm({ commit }, { confirm }) {
     commit('confirm', confirm)
   },
-  saveUserRole ({ commit }, { userRoles }) {
+  saveUserRole({ commit }, { userRoles }) {
     return new Promise((resolve, reject) => {
       axios({ url: API + 'userroles', data: userRoles, method: 'POST' })
         .then(resp => {
@@ -174,7 +174,7 @@ const actions = {
         })
     })
   },
-  userRoles ({ commit }, user) {
+  userRoles({ commit }, user) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'userroles/' + user.UserId, data: user, method: 'GET' })
@@ -183,6 +183,38 @@ const actions = {
           const token = localStorage.getItem('token')
           axios.defaults.headers.common['Authorization'] = token
           commit('user_roles_success', userRoles)
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('request_error', handleError(err))
+          reject(err)
+        })
+    })
+  },
+  updateConfig({ commit }, item) {
+    return new Promise((resolve, reject) => {
+      commit('start_request')
+      axios({ url: API + 'config', data: item, method: 'PUT' })
+        .then(resp => {
+          const config = resp.data.config
+          const message = resp.data.message
+          commit('change_config_success', { config, message })
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('request_error', handleError(err))
+          reject(err)
+        })
+    })
+  },
+  loadConfig({ commit }) {
+    return new Promise((resolve, reject) => {
+      commit('start_request')
+      axios({ url: API + 'config', method: 'GET' })
+        .then(resp => {
+          const config = resp.data.config
+          const message = resp.data.message
+          commit('change_config_success', { config, message })
           resolve(resp)
         })
         .catch(err => {
