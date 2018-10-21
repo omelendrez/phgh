@@ -1,16 +1,16 @@
 <template>
-  <List :items="items" />
+  <ConfigList :items="items" />
 </template>
 
 <script>
 import store from '@/store'
-import List from '@/components/List'
+import ConfigList from '@/components/ConfigList'
 import config from '@/config'
 
 export default {
   name: 'GH',
   components: {
-    List
+    ConfigList
   },
   store,
   data: () => ({
