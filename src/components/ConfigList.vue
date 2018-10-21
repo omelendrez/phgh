@@ -46,17 +46,17 @@ export default {
       this.itemsList = this.items
     },
     config () {
-      const list = this.itemsList
+      const newlist = this.itemsList
       const config = this.config[0]
       for (const field in config) {
         const value = config[field]
-        list.map(item => {
+        newlist.map(item => {
           if (item.fieldName === field) {
             item.value = value
           }
         })
       }
-      this.itemsList = list
+      this.itemsList = newlist
     }
   },
   methods: {
