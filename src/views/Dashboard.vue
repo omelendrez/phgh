@@ -14,13 +14,14 @@ export default {
   store,
   data: () => ({
     cards: [
-      { title: 'System', value: 'OK', color: '#344955', flex: 4 },
-      { title: 'Aplication', value: 'OK', color: '#4a6572', flex: 4 },
-      { title: 'Database', value: 'OK', color: '#356859', flex: 4 },
-      { title: 'Amount in the system', value: 'NGN 3,456,789', color: '#344955', flex: 3 },
-      { title: 'Bitcoins', value: 'NGN 456,789', color: '#4a6572', flex: 3 },
-      { title: 'Transactions', value: '932', color: '#356859', flex: 3 },
-      { title: 'Blocked participants', value: '83', color: '#344955', flex: 3 }
+      { title: 'Aplication', value: 'OK', color: '#356859', flex:  2 },
+      { title: 'Database', value: 'OK', color: '#356859', flex:  2 },
+      { title: 'PH Amount', value: 'NGN 1,621,765', color: '#344955', flex: 3 },
+      { title: 'GH Amount', value: 'NGN 1,442,089', color: '#344955', flex: 3 },
+      { title: 'Bitcoins for PH', value: 'NGN 432,200', color: '#4a6572', flex: 3 },
+      { title: 'Bitcoins for GH', value: 'NGN 440,523', color: '#4a6572', flex: 3 },
+      { title: 'Transactions', value: '932', color: '#356859', flex: 2 },
+      { title: 'Blocked participants', value: '83', color: '#356859', flex: 2 }
     ]
   }),
   created () {
