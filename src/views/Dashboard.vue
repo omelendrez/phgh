@@ -28,7 +28,6 @@ export default {
     store.dispatch('setAppTitle', 'Dashboard')
   }
 }
-
 </script>
 
 <style scoped>
