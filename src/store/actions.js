@@ -222,6 +222,22 @@ const actions = {
           reject(err)
         })
     })
+  },
+  audit({ commit }) {
+    return new Promise((resolve, reject) => {
+      commit('start_request')
+      axios({ url: API + 'audit', method: 'GET' })
+        .then(resp => {
+          const audit = resp.data.audit
+          const message = resp.data.message
+          commit('audit_success', { audit, message })
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('request_error', handleError(err))
+          reject(err)
+        })
+    })
   }
 }
 
