@@ -21,6 +21,7 @@ const state = {
   },
   actionStatus: null,
   userRoles: [],
-  config: {}
+  config: {},
+  audit: []
 }
 export default state

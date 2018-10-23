@@ -13,7 +13,8 @@ const getters = {
   roles: state => state.roles,
   newRole: state => state.newRole,
   userRoles: state => state.userRoles,
-  config: state => state.config
+  config: state => state.config,
+  audit: state => state.audit
 }
 
 export default getters

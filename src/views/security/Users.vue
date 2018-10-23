@@ -47,6 +47,7 @@
     </v-dialog>
     <v-data-table :headers="headers" :items="items" :pagination.sync="pagination" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
+        <td>{{ props.item.id }}</td>
         <td>{{ props.item.first }}</td>
         <td>{{ props.item.last }}</td>
         <td>{{ props.item.email }}</td>
@@ -103,6 +104,12 @@ export default {
       },
       headers: [
         {
+          text: 'ID',
+          value: 'id',
+          align: 'left',
+          sortable: false
+        },
+        {
           text: 'First',
           value: 'first',
           align: 'left',
@@ -150,6 +157,7 @@ export default {
   },
   watch: {
     users () {
+      this.pagination.totalItems = this.users.length
       this.items = this.users
     },
     roles () {
@@ -196,7 +204,6 @@ export default {
       if (!this.pagination.rowsPerPage || !this.items.length) {
         return 0
       } else {
-        this.pagination.totalItems = this.items.length
         return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
       }
     },

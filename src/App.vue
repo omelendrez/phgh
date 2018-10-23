@@ -31,9 +31,9 @@
 
           <v-list-group sub-group no-action>
             <v-list-tile slot="activator">
-              <v-list-tile-title>Permissions</v-list-tile-title>
+              <v-list-tile-title>Security</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile v-for="(permission, i) in permissions" :key="i" @click="permission[2]">
+            <v-list-tile v-for="(permission, i) in security" :key="i" @click="permission[2]">
               <v-list-tile-title v-text="permission[0]"></v-list-tile-title>
               <v-list-tile-action>
                 <v-icon v-text="permission[1]"></v-icon>
@@ -42,6 +42,13 @@
           </v-list-group>
 
         </v-list-group>
+
+        <v-list-tile @click="audit()">
+          <v-list-tile-action>
+            <v-icon>security</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-title>Audit</v-list-tile-title>
+        </v-list-tile>
 
         <v-list-tile @click="logout()">
           <v-list-tile-action>
@@ -73,22 +80,7 @@
     <v-content>
       <router-view></router-view>
     </v-content>
-    <v-footer app v-if="isAuthenticated">
-      <v-bottom-nav :active.sync="activeBtn" :value="showNav" absolute color="transparent">
-        <v-btn flat color="blue-grey">
-          <span>Recents</span>
-          <v-icon>history</v-icon>
-        </v-btn>
-        <v-btn flat color="blue-grey">
-          <span>Favorites</span>
-          <v-icon>favorite</v-icon>
-        </v-btn>
-        <v-btn flat color="blue-grey">
-          <span>Nearby</span>
-          <v-icon>place</v-icon>
-        </v-btn>
-      </v-bottom-nav>
-    </v-footer>
+
     <Snack v-bind:message="alertMessage" />
     <Dialog v-bind:confirm="confirmData" />
     <Loading />
@@ -117,7 +109,7 @@ export default {
       showAlert: false,
       alertMessage: null,
       confirmData: null,
-      permissions: [
+      security: [
         ['Users', 'person', this.users],
         ['Roles', 'supervisor_account', this.roles]
       ],
@@ -169,6 +161,10 @@ export default {
     dashboard () {
       this.showDrawer = false
       this.$router.push({ name: 'dashboard' })
+    },
+    audit() {
+      this.showDrawer = false
+      this.$router.push({ name: 'audit' })
     },
     showAlerts () {
       console.log('this show go show the list of alerts')  // eslint-disable-line no-console

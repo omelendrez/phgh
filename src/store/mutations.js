@@ -66,6 +66,11 @@ const mutations = {
     state.status = 'success'
     state.config = config
     state.apiMessage = message
+  },
+  audit_success(state, {audit, message}) {
+    state.status = 'success'
+    state.audit = audit
+    state.apiMessage = message
   }
 }
 

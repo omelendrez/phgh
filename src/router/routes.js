@@ -20,14 +20,19 @@ const routes = [
     component: 'Dashboard'
   },
   {
-    path: '/permissions/users',
+    path: '/security/users',
     name: 'users',
-    component: 'permissions/Users'
+    component: 'security/Users'
   },
   {
-    path: '/permissions/roles',
+    path: '/security/roles',
     name: 'roles',
-    component: 'permissions/Roles'
+    component: 'security/Roles'
+  },
+  {
+    path: '/security/audit',
+    name: 'audit',
+    component: 'security/Audit'
   },
   {
     path: '/settings/config/main',
