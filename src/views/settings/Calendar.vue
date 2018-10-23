@@ -110,14 +110,9 @@ export default {
     },
     dayClicked (e) {
       const attr = e.attributes[0]
-      if (attr) {
-        this.holidayName = attr.popover.label
-        this.editing = attr.popover.label
-        this.id = attr.key
-      } else {
-        this.id = null
-        this.editing = false
-      }
+      this.id = attr ? attr.key : null
+      this.holidayName = attr ? attr.popover.label : ''
+      this.editing = attr ? attr.popover.label : false
       this.title = this.pad(e.day, 2) + '-' + this.pad(e.month, 2) + '-' + e.year
       this.date = e.year + '-' + this.pad(e.month, 2) + '-' + this.pad(e.day, 2)
       this.dialog = true
