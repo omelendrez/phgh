@@ -35,31 +35,31 @@ export default {
           text: 'Table',
           value: 'model',
           align: 'left',
-          sortable: true
+          sortable: false
         },
         {
-          text: 'Record',
+          text: 'Record #',
           value: 'recordId',
           align: 'left',
-          sortable: true
+          sortable: false
         },
         {
-          text: 'Field',
+          text: 'Change action',
           value: 'field',
           align: 'left',
-          sortable: true
+          sortable: false
         },
         {
-          text: 'Value',
+          text: 'Data',
           value: 'value',
           align: 'left',
-          sortable: true
+          sortable: false
         },
         {
-          text: 'Who?',
+          text: 'Who changed?',
           value: 'userId',
           align: 'left',
-          sortable: true
+          sortable: false
         },
         {
           text: 'When?',
@@ -68,49 +68,69 @@ export default {
           sortable: false
         }
       ],
-      items: []
+      items: [],
+      field: ''
     }
   },
   watch: {
     audit () {
+      this.pagination.totalItems = this.audit.length
+      this.pagination.rowsPerPage = 10
       const audit = this.audit.map(row => {
-        switch(row.model) {
-          case: 'configs':
-            row.field =
-          break
+        switch (row.model) {
+          case 'configs':
+            this.getConfigField(row.field)
+            row.field = this.field.title
+            if (this.field.type === 'switch') {
+              row.value = row.value === '1' ? 'Activated' : 'Inactivated'
+            } else {
+              row.value = `${row.value} ${this.field.suffix || ''}`
+            }
+            break
           default:
-
+            row.field = row.field.replace('add', 'Added').replace('upd', 'Changed').replace('del', 'Deleted')
+            row.value = row.value
         }
+        row.userId = this.getUser(row.userId)
+        return row
       })
-
-
-      this.items = this.audit
+      this.items = audit
     }
   },
   computed: {
     audit () {
       return store.getters.audit
     },
+    users () {
+      return store.getters.users
+    },
     pages () {
       if (!this.pagination.rowsPerPage || !this.items.length) {
         return 0
       } else {
-        this.pagination.totalItems = this.items.length
         return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
       }
     }
   },
   methods: {
     formatDate (date) {
-      return moment(date).fromNow()
+      return moment(date).format('MMMM Do YYYY, h:mm a')
+    },
+    getConfigField (field) {
+      for (var key in config) {
+        if (config[key].find(item => item.fieldName === field))
+          this.field = config[key].find(item => item.fieldName === field)
+      }
+    },
+    getUser (id) {
+      const user = this.users.find(user => user.id === id)
+      return `${user.first} ${user.last}`
     }
   },
   created () {
+    store.dispatch('users')
     store.dispatch('audit')
     store.dispatch('setAppTitle', 'Audit')
-  },
-  getFieldName(field) {
-
   }
 }
 </script>

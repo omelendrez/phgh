@@ -80,22 +80,7 @@
     <v-content>
       <router-view></router-view>
     </v-content>
-    <v-footer app v-if="isAuthenticated">
-      <v-bottom-nav :active.sync="activeBtn" :value="showNav" absolute color="transparent">
-        <v-btn flat color="blue-grey">
-          <span>Recents</span>
-          <v-icon>history</v-icon>
-        </v-btn>
-        <v-btn flat color="blue-grey">
-          <span>Favorites</span>
-          <v-icon>favorite</v-icon>
-        </v-btn>
-        <v-btn flat color="blue-grey">
-          <span>Nearby</span>
-          <v-icon>place</v-icon>
-        </v-btn>
-      </v-bottom-nav>
-    </v-footer>
+
     <Snack v-bind:message="alertMessage" />
     <Dialog v-bind:confirm="confirmData" />
     <Loading />

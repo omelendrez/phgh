@@ -26,6 +26,7 @@
 
     <v-data-table :headers="headers" :items="items" :pagination.sync="pagination" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
+        <td>{{ props.item.id }}</td>
         <td>{{ props.item.name }}</td>
         <td>{{ formatDate(props.item.createdAt) }}</td>
         <td>{{ formatDate(props.item.updatedAt) }}</td>
@@ -70,6 +71,12 @@ export default {
       },
       headers: [
         {
+          text: 'ID',
+          value: 'id',
+          align: 'left',
+          sortable: false
+        },
+        {
           text: 'Name',
           value: 'name',
           align: 'left',
@@ -99,6 +106,7 @@ export default {
   },
   watch: {
     roles () {
+      this.pagination.totalItems = this.roles.length
       this.items = this.roles
     },
     dialog (val) {
@@ -120,7 +128,6 @@ export default {
       if (!this.pagination.rowsPerPage || !this.items.length) {
         return 0
       } else {
-        this.pagination.totalItems = this.items.length
         return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
       }
     },
