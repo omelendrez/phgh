@@ -22,6 +22,8 @@ const state = {
   actionStatus: null,
   userRoles: [],
   config: {},
-  audit: []
+  audit: [],
+  holiday: {},
+  holidays: []
 }
 export default state

@@ -43,6 +43,13 @@
 
         </v-list-group>
 
+        <v-list-tile @click="calendar()">
+          <v-list-tile-action>
+            <v-icon>event</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-title>Calendar</v-list-tile-title>
+        </v-list-tile>
+
         <v-list-tile @click="audit()">
           <v-list-tile-action>
             <v-icon>security</v-icon>
@@ -165,6 +172,10 @@ export default {
     audit() {
       this.showDrawer = false
       this.$router.push({ name: 'audit' })
+    },
+    calendar() {
+      this.showDrawer = false
+      this.$router.push({ name: 'calendar' })
     },
     showAlerts () {
       console.log('this show go show the list of alerts')  // eslint-disable-line no-console
