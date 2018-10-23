@@ -8,7 +8,13 @@ import Vuetify from 'vuetify'
 import VueChartkick from 'vue-chartkick'
 // import firebase from 'firebase'
 import './registerServiceWorker'
+import VCalendar from 'v-calendar';
+import 'v-calendar/lib/v-calendar.min.css';
 
+// Use v-calendar, v-date-picker & v-popover components
+Vue.use(VCalendar, {
+  firstDayOfWeek: 1
+});
 
 Vue.use(Vuetify)
 Vue.use(VueChartkick)

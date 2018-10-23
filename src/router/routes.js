@@ -30,6 +30,11 @@ const routes = [
     component: 'security/Roles'
   },
   {
+    path: '/settings/calendar',
+    name: 'calendar',
+    component: 'settings/Calendar'
+  },
+  {
     path: '/security/audit',
     name: 'audit',
     component: 'security/Audit'

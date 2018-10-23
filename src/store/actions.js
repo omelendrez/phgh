@@ -8,10 +8,10 @@ const handleError = err => {
 }
 
 const actions = {
-  setAppTitle({ commit }, payload) {
+  setAppTitle ({ commit }, payload) {
     commit('setAppTitle', payload)
   },
-  login({ commit }, user) {
+  login ({ commit }, user) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'users/login', data: user, method: 'POST' })
@@ -32,7 +32,7 @@ const actions = {
         })
     })
   },
-  logout({ commit }) {
+  logout ({ commit }) {
     return new Promise((resolve) => {
       commit('logout')
       localStorage.removeItem('token')
@@ -40,7 +40,7 @@ const actions = {
       resolve()
     })
   },
-  users({ commit }) {
+  users ({ commit }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'users', method: 'GET' })
@@ -57,7 +57,7 @@ const actions = {
         })
     })
   },
-  saveUser({ commit }, { user, isNew }) {
+  saveUser ({ commit }, { user, isNew }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       if (isNew && !user.password) {
@@ -81,7 +81,7 @@ const actions = {
         })
     })
   },
-  deleteUser({ commit }, { user }) {
+  deleteUser ({ commit }, { user }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'users/' + user.id, method: 'DELETE' })
@@ -101,7 +101,7 @@ const actions = {
         })
     })
   },
-  roles({ commit }) {
+  roles ({ commit }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'roles', method: 'GET' })
@@ -118,7 +118,7 @@ const actions = {
         })
     })
   },
-  saveRole({ commit }, { role, isNew }) {
+  saveRole ({ commit }, { role, isNew }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       const url = `${API}roles${!isNew ? '/' + role.id : ''}`
@@ -139,7 +139,7 @@ const actions = {
         })
     })
   },
-  deleteRole({ commit }, { role }) {
+  deleteRole ({ commit }, { role }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'roles/' + role.id, method: 'DELETE' })
@@ -159,10 +159,10 @@ const actions = {
         })
     })
   },
-  getConfirm({ commit }, { confirm }) {
+  getConfirm ({ commit }, { confirm }) {
     commit('confirm', confirm)
   },
-  saveUserRole({ commit }, { userRoles }) {
+  saveUserRole ({ commit }, { userRoles }) {
     return new Promise((resolve, reject) => {
       axios({ url: API + 'userroles', data: userRoles, method: 'POST' })
         .then(resp => {
@@ -174,7 +174,7 @@ const actions = {
         })
     })
   },
-  userRoles({ commit }, user) {
+  userRoles ({ commit }, user) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'userroles/' + user.UserId, data: user, method: 'GET' })
@@ -191,7 +191,7 @@ const actions = {
         })
     })
   },
-  updateConfig({ commit }, item) {
+  updateConfig ({ commit }, item) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'config', data: item, method: 'PUT' })
@@ -207,7 +207,7 @@ const actions = {
         })
     })
   },
-  loadConfig({ commit }) {
+  loadConfig ({ commit }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'config', method: 'GET' })
@@ -223,7 +223,7 @@ const actions = {
         })
     })
   },
-  audit({ commit }) {
+  audit ({ commit }) {
     return new Promise((resolve, reject) => {
       commit('start_request')
       axios({ url: API + 'audit', method: 'GET' })
@@ -231,6 +231,79 @@ const actions = {
           const audit = resp.data.audit
           const message = resp.data.message
           commit('audit_success', { audit, message })
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('request_error', handleError(err))
+          reject(err)
+        })
+    })
+  },
+  loadHolidays ({ commit }) {
+    return new Promise((resolve, reject) => {
+      commit('start_request')
+      axios({ url: API + 'holiday', method: 'GET' })
+        .then(resp => {
+          const holidays = resp.data.holidays
+          const message = resp.data.message
+          commit('holiday_success', { holidays, message })
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('request_error', handleError(err))
+          reject(err)
+        })
+    })
+  },
+  saveHoliday ({ commit }, holiday) {
+    return new Promise((resolve, reject) => {
+      axios({ url: API + 'holiday', data: holiday, method: 'POST' })
+        .then(resp => {
+          if (resp.data.success) {
+            const holiday = resp.data.holiday
+            const message = resp.data.message
+            commit('save_holiday_success', { holiday, message })
+          } else {
+            commit('request_error', resp)
+          }
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('request_error', handleError(err))
+          reject(err)
+        })
+    })
+  },
+  updateHoliday ({ commit }, holiday) {
+    return new Promise((resolve, reject) => {
+      axios({ url: API + 'holiday/' + holiday.id, data: holiday, method: 'PUT' })
+        .then(resp => {
+          if (resp.data.success) {
+            const holiday = resp.data.holiday
+            const message = resp.data.message
+            commit('save_holiday_success', { holiday, message })
+          } else {
+            commit('request_error', resp)
+          }
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('request_error', handleError(err))
+          reject(err)
+        })
+    })
+  },
+  deleteHoliday ({ commit }, holiday) {
+    return new Promise((resolve, reject) => {
+      axios({ url: API + 'holiday/' + holiday.id, method: 'DELETE' })
+        .then(resp => {
+          if (resp.data.success) {
+            const holiday = resp.data.holiday
+            const message = resp.data.message
+            commit('delete_holiday_success', { holiday, message })
+          } else {
+            commit('request_error', resp)
+          }
           resolve(resp)
         })
         .catch(err => {
