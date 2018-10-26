@@ -1,8 +1,9 @@
 <template>
   <v-container fluid>
 
-    <v-data-table :headers="headers" :items="items" :pagination.sync="pagination" hide-actions class="elevation-1">
+    <v-data-table :loading="loading" :headers="headers" :items="items" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
+        <td>{{ props.item.id }}</td>
         <td>{{ props.item.model }}</td>
         <td>{{ props.item.recordId }}</td>
         <td>{{ props.item.field }}</td>
@@ -29,8 +30,22 @@ export default {
   store,
   data () {
     return {
-      pagination: {},
+      pagination: {
+        descending: false,
+        page: 1,
+        rowsPerPage: 10,
+        sortBy: null,
+        totalItems: 0,
+      },
+      pages: 0,
+      loading: false,
       headers: [
+        {
+          text: 'Transaction',
+          value: 'id',
+          align: 'left',
+          sortable: false
+        },
         {
           text: 'Table',
           value: 'model',
@@ -73,10 +88,18 @@ export default {
     }
   },
   watch: {
+    pagination: {
+      handler () {
+        store.dispatch('audit', this.pagination.page)
+        this.loading = true
+      },
+      deep: true
+    },
     audit () {
-      this.pagination.totalItems = this.audit.length
-      this.pagination.rowsPerPage = 10
-      const audit = this.audit.map(row => {
+      this.pagination.totalItems = this.audit.count
+      this.pages = Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+      this.items = []
+      const audit = this.audit.rows.map(row => {
         switch (row.model) {
           case 'configs':
             this.getConfigField(row.field)
@@ -95,6 +118,7 @@ export default {
         return row
       })
       this.items = audit
+      this.loading = false
     }
   },
   computed: {
@@ -103,13 +127,6 @@ export default {
     },
     users () {
       return store.getters.users
-    },
-    pages () {
-      if (!this.pagination.rowsPerPage || !this.items.length) {
-        return 0
-      } else {
-        return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
-      }
     }
   },
   methods: {
@@ -129,7 +146,7 @@ export default {
   },
   created () {
     store.dispatch('users')
-    store.dispatch('audit')
+    store.dispatch('audit', this.pagination.page)
     store.dispatch('setAppTitle', 'Audit')
   }
 }
