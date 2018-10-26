@@ -223,14 +223,15 @@ const actions = {
         })
     })
   },
-  audit ({ commit }) {
+  audit ({ commit }, page) {
     return new Promise((resolve, reject) => {
       commit('start_request')
-      axios({ url: API + 'audit', method: 'GET' })
+      axios({ url: API + 'audit?page='+ page, method: 'GET' })
         .then(resp => {
           const audit = resp.data.audit
+          const rows = resp.data.rows
           const message = resp.data.message
-          commit('audit_success', { audit, message })
+          commit('audit_success', { audit, rows, message })
           resolve(resp)
         })
         .catch(err => {
